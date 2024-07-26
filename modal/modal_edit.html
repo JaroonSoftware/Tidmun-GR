@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- <link rel="icon" href="assets/icons/win/icon.ico"> -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.css">    
+
+    <!-- Insert this line above script imports  -->
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
+
+    <!-- normal script imports etc  -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .pane {
+            display: inline-block;
+            overflow-y: scroll;
+            max-height: 650px;
+        }
+
+
+
+
+        .tableFixHead {
+            overflow-y: auto;
+            /* make the table scrollable if height is more than 200 px  */
+            height: 700px;
+            /* gives an initial height of 200px to the table */
+        }
+
+        .tableFixHead thead th {
+            position: sticky;
+            /* make the table heads sticky */
+            top: 0px;
+            /* table head will be placed from the top of the table and sticks to it */
+        }
+
+        table {
+            border-collapse: collapse;
+            /* make the table borders collapse to each other */
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 16px;
+            border: 1px solid #0f0e0e;
+        }
+
+        th {
+            background: #e4b355;
+        }
+
+        body,
+        html {
+            height: 100%;
+            color: #0f0e0e;
+            background-color: #ccc;
+            overflow-x: hidden;
+            /* background-image: url(./assets/icons/BG-login.png);
+            
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed; */
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <div class="container-fluid ">
+        <div class="row ">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">จำนวนเปลือกกุ้ง</label>
+                        <select id="shrimp_shell" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="≥30">≥30</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">&nbsp;</label>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" id="btnDelete" class="btn btn-danger form-control"><i
+                                        class='far fa-trash-alt'></i> ลบข้อมูล</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" id="btnSubmit" class="btn btn-primary form-control"><i
+                                        class='far fa-edit'></i> บันทึกข้อมูล</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">หมายเหตุ Remark</label>
+                <textarea row="2" type="text" id="remark" class="form-control"></textarea>
+            </div>
+            <div><br></div>
+            <hr>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Weight Id</label>
+                        <input type="text" id="weight_record_id" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">พนักงาน</label>
+                        <input type="text" id="empcode" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">น้ำหนักที่ชั่งได้</label>
+                        <input type="text" id="unit_weight" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Product</label>
+                        <input type="text" id="product_weight" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">วันที่</label>
+                        <input type="text" id="date" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">เวลา</label>
+                        <input type="text" id="time" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div><br></div>
+            <hr>
+        </div>
+
+    </div>
+    <br>
+    <!-- <h3 id="txtresult" style="margin-left: 15px;color: #fb2a2a;padding: 0;font-weight: bold;">กด F10 เพื่อบันทึกผล</h3> -->
+</body>
+
+</html>
+<script>
+
+    $("#btnDelete").click(async function () {
+        await Swal.fire({
+            title: "คุณแน่ใจหรือไม่ว่าต้องการจะลบ !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "ยืนยัน",
+            cancelButtonText: "ยกเลิก",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                $.post("https://yeeninfrozenfoods.com/api_app/weight_record/delete_record.php", { id: $("#weight_record_id").val() }, async function (response) {
+
+                    let r = JSON.parse(response)
+
+                    if (r.status === 1) {
+
+                        await Swal.fire(r.message, "", "success").then(() => {
+
+                            const ipc = window.require("electron").ipcRenderer;
+
+                            ipc.send('delete')
+                            setTimeout(function () {
+                                window.close();
+                            }, 50);
+
+                        });
+                    }
+                    else {
+                        await Swal.fire(r.message, "", "fail").then(() => {
+                            setTimeout(function () {
+                                window.close();
+                            }, 50);
+
+                        });
+                    }
+
+                }).fail(async function (error) {
+
+                    await Swal.fire("อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้", "", "fail").then(() => {
+                        setTimeout(function () {
+                            window.close();
+                        }, 50);
+
+                    });
+                });
+
+            }
+
+        });
+    });
+
+    $("#btnSubmit").click(function () {
+
+        $.post("https://yeeninfrozenfoods.com/api_app/weight_record/edit_record.php", { id: $("#weight_record_id").val(), shrimp_shell: $("#shrimp_shell").val(), remark: $("#remark").val() }, async function (response) {
+
+            let r = JSON.parse(response)
+
+            if (r.status === 1) {
+
+                await Swal.fire(r.message, "", "success").then(() => {
+
+                    const ipc = window.require("electron").ipcRenderer;
+
+                            ipc.send('get')
+
+                    setTimeout(function () {
+
+                        window.close();
+                    }, 50);
+
+                });
+            }
+            else {
+                await Swal.fire(r.message, "", "fail").then(() => {
+                    setTimeout(function () {
+                        window.close();
+                    }, 50);
+
+                });
+            }
+
+        }).fail(async function (error) {
+
+            await Swal.fire("อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้", "", "fail").then(() => {
+                setTimeout(function () {
+                    window.close();
+                }, 50);
+
+            });
+        });
+
+    });
+
+    $(document).ready(function () {
+
+        // $.post("https://yeeninfrozenfoods.com/api_app/product/get_allproduct.php", function (r) {
+
+        //     let data = JSON.parse(r)
+
+        //     for (let c in data) {
+        //         $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name + ' ' + data[c].spec_type + ' ' + data[c].size_min + '/' + data[c].size_max + ' ' + "</option>")
+        //     }
+
+        // })
+
+        const { ipcRenderer } = require("electron");
+        // alert('test')
+
+        ipcRenderer.on("send-token", (event, accessToken) => {
+
+            $.post("https://yeeninfrozenfoods.com/api_app/weight_record/get_subrecord.php", { idcode: accessToken }, function (r) {
+                let response = JSON.parse(r);
+                // console.log(response)
+                $('#weight_record_id').val(accessToken)
+                $('#empcode').val(response.empcode)
+                $('#unit_weight').val(response.unit_weight)
+                $('#product_weight').val(response.product_weight)
+                $('#shrimp_shell').val(response.shrimp_shell)
+                $('#remark').val(response.remark)
+                $('#date').val(response.date)
+                $('#time').val(response.time)
+            })
+
+            // console.log(accessToken)
+        });
+    });
+
+
+</script>

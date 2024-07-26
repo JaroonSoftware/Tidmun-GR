@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <!-- <link rel="icon" href="../assets/icons/win/icon.ico"> -->
+
+    <!-- Insert this line above script imports  -->
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
+
+    <!-- normal script imports etc  -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .pane {
+            display: inline-block;
+            overflow-y: scroll;
+            max-height: 650px;
+        }
+
+
+
+
+        .tableFixHead {
+            overflow-y: auto;
+            /* make the table scrollable if height is more than 200 px  */
+            height: 700px;
+            /* gives an initial height of 200px to the table */
+        }
+
+        .tableFixHead thead th {
+            position: sticky;
+            /* make the table heads sticky */
+            top: 0px;
+            /* table head will be placed from the top of the table and sticks to it */
+        }
+
+        table {
+            border-collapse: collapse;
+            /* make the table borders collapse to each other */
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 16px;
+            border: 1px solid #0f0e0e;
+        }
+
+        th {
+            background: #e4b355;
+        }
+
+        body,
+        html {
+            height: 100%;
+            color: #0f0e0e;
+            background-color: #ccc;
+            overflow-x: hidden;
+            /* background-image: url(./assets/icons/BG-login.png);
+            
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed; */
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <div class="container-fluid ">
+        <div class="row ">
+            <div class="col-md-12">
+                <label for="selproduct">สินค้า</label>
+                <select class="form-control " id="selproduct"></select>
+
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <!-- <h3 id="txtresult" style="margin-left: 15px;color: #fb2a2a;padding: 0;font-weight: bold;">กด F10 เพื่อบันทึกผล</h3> -->
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-4">
+            <button type="button" id="btnSubmit" class="btn btn-primary btn-lg"> ตกลง </button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+    // document
+    //     .addEventListener("keydown", e => {
+    //         if (e.key === "F10") {
+    //             e.preventDefault()
+    //         }
+    //     })
+    
+    $("#btnSubmit").click(function () {
+        const ipc = window.require("electron").ipcRenderer;
+
+        ipc.send('notes', $('#selproduct').val() )
+
+        window.close();
+    });
+
+
+    $.post("https://yeeninfrozenfoods.com/api_app/product/get_allproduct.php", function (r) {
+
+        let data = JSON.parse(r)
+
+        for (let c in data) {
+            $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name +' '+ data[c].spec_type +' '+ data[c].size_min +'/'+ data[c].size_max +' '+ "</option>")
+        }
+
+    }).fail(function (error) {
+
+        $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+    });
+</script>
