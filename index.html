@@ -86,6 +86,7 @@
                 <th>ชื่อสินค้า</th>
                 <th>จำนวน</th>
                 <th>ราคา</th>
+                <th>สถานะ</th>
               </tr>
             </thead>
             <tbody style="background-color: #ffffff;padding: 0;">
@@ -116,7 +117,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                <label for="selproduct">สินค้า</label>
+                <label for="selproduct">เลขที่ใบรับสินค้า</label>
                 <select class="form-control" id="selproduct" disabled></select>
               </div>
             </div>
@@ -125,7 +126,7 @@
               <div class="col-md-12">
                 <div style="padding-top: 5px;">
                   <!-- <button onclick="window.open('modal/modal_product.html', '_blank', 'width=200,height=200');" >แก้ไขข้อมูล</button> -->
-                  <button class="btn btn-secondary" onclick="createBrowserWindow();">แก้ไขข้อมูล</button>
+                  <button class="btn btn-secondary" onclick="createBrowserWindow();">เลือกใบรับสินค้าใหม่</button>
 
                 </div>
               </div>
@@ -150,7 +151,7 @@
 
     <footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
       <div class="text-center p-2 " style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2023 Copyright:
+        © 2024 Copyright:
         <a class="text-reset fw-bold" href="#">Jaroon Software CO.,Ltd</a>
       </div>
     </footer>
@@ -190,8 +191,8 @@
 
           for (let i in result) {
             tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].create_date + '</td><td>' + result[i].empcode + '</td><td>' + result[i].firstname + " " + result[i].lastname + '</td><td>' + result[i].unit_weight + '</td><td>' + result[i].shrimp_shell + '</td><td><button class="btn btn-secondary" onclick="EditWindow(' + result[i].id + ');"> Edit</button></td>';
-            tb += '</tr>';
+            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].create_date + '</td><td>' + result[i].empcode + '</td><td>' + result[i].firstname +'</td><td>' 
+                    + result[i].unit_weight + '</td><td>' + result[i].empcode +'</td><td>'  ; tb += '</tr>';
             $(tb).appendTo("#tbmain");
           }
 
