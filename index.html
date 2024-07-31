@@ -81,10 +81,10 @@
           <table id="tbmain">
             <thead>
               <tr>
-                <th>วันที่ / เวลา</th>
                 <th>รหัสสินค้า</th>
                 <th>ชื่อสินค้า</th>
                 <th>จำนวน</th>
+                <th>ราคาต่อหน่วย</th>
                 <th>ราคา</th>
                 <th>สถานะ</th>
               </tr>
@@ -191,8 +191,9 @@
 
           for (let i in result) {
             tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].create_date + '</td><td>' + result[i].empcode + '</td><td>' + result[i].firstname +'</td><td>' 
-                    + result[i].unit_weight + '</td><td>' + result[i].empcode +'</td><td>'  ; tb += '</tr>';
+            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].empcode + '</td><td>' + result[i].firstname +'</td><td style="text-align: right;">' 
+              + result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode +'</td><td style="text-align: right;">' 
+                + result[i].empcode +'</td><td style="text-align: center;">' + result[i].firstname +'</td>'; tb += '</tr>';
             $(tb).appendTo("#tbmain");
           }
 
