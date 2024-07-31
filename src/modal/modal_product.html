@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>TIDMUN</title>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.css">
     <!-- <link rel="icon" href="../assets/icons/win/icon.ico"> -->
     <!-- Insert this line above script imports  -->
     <script>
         if (typeof module === 'object') { window.module = module; module = undefined; }
     </script>
     <!-- normal script imports etc  -->
-    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
     <style>
@@ -117,7 +117,7 @@
     });
 
 
-    $.post("https://yeeninfrozenfoods.com/api_app/product/get_allproduct.php", function (r) {
+    $.post("https://tidmunzbuffet.com/api_app/product/get_allproduct.php", function (r) {
 
         let data = JSON.parse(r)
 

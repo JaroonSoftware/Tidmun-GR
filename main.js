@@ -32,7 +32,7 @@ function createWindow() {
       },
     });
     // child.setIcon('assets/icons/win/icon.ico');
-    child.loadFile("modal/modal_product.html");
+    child.loadFile("src/modal/modal_product.html");
   }
 
   const electronLocalshortcut = require("electron-localshortcut");
@@ -69,7 +69,7 @@ function createWindow() {
   
   
 
-  editwindow.loadFile("modal/modal_edit.html");
+  editwindow.loadFile("src/modal/modal_edit.html");
   // editwindow.setIcon('assets/icons/win/icon.ico');
   editwindow.on("close", (evt) => {
     evt.preventDefault(); // This will cancel the close
@@ -92,7 +92,7 @@ function createWindow() {
 
   showLoginWindow();
   
-  mainWindow.loadFile("index.html");
+  mainWindow.loadFile("src/index.html");
   // mainWindow.setIcon("assets/icons/win/icon.ico");
 }
 

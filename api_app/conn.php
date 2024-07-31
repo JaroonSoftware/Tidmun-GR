@@ -1,9 +1,9 @@
 ﻿<?php
 class DbConnect {
 	private $server = 'localhost';
-	private $user = "yeeninfr_db"; //
+	private $user = "tidmunzb_db"; //
 	private $pass = "Gxh.2411"; //
-	private $dbname = "yeeninfr_db";
+	private $dbname = "tidmunzb_db";
 
 	public function connect() {
 		try {
