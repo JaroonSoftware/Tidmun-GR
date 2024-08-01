@@ -2,16 +2,19 @@ const { ipcRenderer } = require("electron");
 
 ipcRenderer.on("got-access-token", (event, accessToken) => {
   // data = accessToken.split(",");
-  
-  $("#selproduct").val(accessToken);
-  // $('#get-data').val("Moving On... " + data)
+  let grcode = accessToken;
+ 
+  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode: grcode }, function (r) {
+    console.log(r)
+  });
+ 
 });
 
 ipcRenderer.on("get-token", (event) => {
 
     $('#tbmain tbody').empty();
   $.post(
-    "https://yeeninfrozenfoods.com/api_app/weight_record/get_record.php",
+    "https://tidmunzbuffet.com/api_app/weight_record/get_record.php",
     function (r) {
       let result = JSON.parse(r);
 
@@ -47,7 +50,7 @@ ipcRenderer.on("delete-token", (event) => {
 
   $('#tbmain tbody').empty();
 $.post(
-  "https://yeeninfrozenfoods.com/api_app/weight_record/get_record.php",
+  "https://tidmunzbuffet.com/api_app/weight_record/get_record.php",
   function (r) {
     let result = JSON.parse(r);
 
@@ -78,3 +81,4 @@ $.post(
   }
 );
 });
+

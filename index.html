@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Shrimp Weight</title>
-  <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="icon" href="./../assets/icons/win/icon.ico">
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="icon" href="/assets/icons/win/icon.ico">
 
   <!-- Insert this line above script imports  -->
   <script>
@@ -13,18 +13,62 @@
   </script>
 
   <!-- normal script imports etc  -->
-  <script type="text/javascript" src="./../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
-  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .pane {
+      display: inline-block;
+      overflow-y: scroll;
+      max-height: 650px;
+    }
+
+    .tableFixHead {
+      overflow-y: auto;
+      height: 700px;
+    }
+
+    .tableFixHead thead th {
+      position: sticky;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      padding: 8px 16px;
+      border: 1px solid #0f0e0e;
+    }
+
+    th {
+      background: #e4b355;
+    }
+
+    body,
+    html {
+      height: 100%;
+      color: #0f0e0e;
+      background-color: #ccc;
+    }
+  </style>
 </head>
 
 <body>
   <nav class="navbar navbar-dark bg-dark justify-content-center">
     <a class="navbar-brand" href="#">
 
-      <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top" alt="">Product weight system</h3>
+      <h3> <img src="./assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top" alt="">Product weight system</h3>
     </a>
 
   </nav>
@@ -99,7 +143,7 @@
             style="width: 100%;height:200px;font-size: 100px;text-align: right;border-color: #0f0e0e;"
             placeholder="สแกนบาร์โค้ดที่นี่" autofocus />
           <span id="statuscon" style="float: right;padding-top: 5px;">Connecting <img id="imgstatus"
-              src="./../assets/icons/connect.png" width="15px" height="15px"></span>
+              src="assets/icons/connect.png" width="15px" height="15px"></span>
         </div>
       </div>
     </div>
@@ -141,13 +185,13 @@
       $(document).ready(function () {
 
 
-        $.post("https://tidmunzbuffet.com/api_app/weight_record/get_record.php", function (r) {
+        $.post("https://yeeninfrozenfoods.com/api_app/weight_record/get_record.php", function (r) {
 
           let result = JSON.parse(r)
 
           for (let i in result) {
             tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].firstname +'</td><td style="text-align: right;">' 
+            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].empcode + '</td><td>' + result[i].firstname +'</td><td style="text-align: right;">' 
               + result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode +'</td><td style="text-align: right;">' 
                 + result[i].empcode +'</td><td style="text-align: center;">' + result[i].firstname +'</td>'; tb += '</tr>';
             $(tb).appendTo("#tbmain");
@@ -159,12 +203,12 @@
           document.getElementById('txtresult').style.color = "red";
         });
 
-        $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
+        $.post("https://yeeninfrozenfoods.com/api_app/product/get_allproduct.php", function (r) {
 
           let data = JSON.parse(r)
 
           for (let c in data) {
-            $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].grcode + ' ' + data[c].grcode + '/' + data[c].grcode + ' ' + "</option>")
+            $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name + ' ' + data[c].spec_type + ' ' + data[c].size_min + '/' + data[c].size_max + ' ' + "</option>")
           }
 
         }).fail(function (error) {
@@ -201,13 +245,13 @@
 
           if (inputweight.value > 0) {
 
-            $.post("https://tidmunzbuffet.com/api_app/employee/check_employee.php", { empcode: inputempcode.value }, function (r) {
+            $.post("https://yeeninfrozenfoods.com/api_app/employee/check_employee.php", { empcode: inputempcode.value }, function (r) {
               let response = JSON.parse(r)
               // console.log(response.status)
               if (response.status === '1') {
                 let data = response;
                 // console.log(data['data'][0]['empcode'])
-                $.post("https://tidmunzbuffet.com/api_app/weight_record/add_record.php", { empcode: data['data'][0]['empcode'], unit_weight: inputweight.value, product_id: $("#selproduct").val(), create_date: data['data'][0]['create_date'] }, function (response2) {
+                $.post("https://yeeninfrozenfoods.com/api_app/weight_record/add_record.php", { empcode: data['data'][0]['empcode'], unit_weight: inputweight.value, product_id: $("#selproduct").val(), create_date: data['data'][0]['create_date'] }, function (response2) {
 
                   let r2 = JSON.parse(response2)
 
@@ -259,7 +303,7 @@
       });
 
       // You can also require other files to run in this process
-      require('./../renderer.js')
+      require('./renderer.js')
     </script>
 </body>
 
