@@ -78,22 +78,44 @@
 
 <body>
     <br>
-    <div class="container-fluid ">
+    <div class="container-fluid">
         <div class="row ">
-            <div class="col-md-12">
-                <label for="selproduct">เลือกใบรับสินค้า</label>
-                <select class="form-control " id="selproduct"></select>
+            <h1>เลือกใบรับสินค้า</h1>
+            <div class="row" style="padding-left: 5%;padding-bottom: 3%;">
+                <a>ค้นหา</a>
+                <div class="col"><input class="form-control" placeholder="เลขที่ GR" id=""></input> </div>
+                <div class="col"><input class="form-control" placeholder="ชื่อผู้ขาย" id=""></input></div>
+                <div class="col"><input class="form-control" placeholder="ที่อยู่" id=""></input></div>
+            </div>
+            <div>
+                <div class="tableFixHead">
+                    <table id="getgr">
+                        <thead>
+                            <tr>
+                                <th>เลขที่ใบรับสินค้า</th>
+                                <th>ชื่อผู้ขาย</th>
+                                <th>ที่อยู่</th>
+                                <th>เลือก</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: #ffffff;">
+
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
         </div>
     </div>
     <br>
+
     <!-- <h3 id="txtresult" style="margin-left: 15px;color: #fb2a2a;padding: 0;font-weight: bold;">กด F10 เพื่อบันทึกผล</h3> -->
     <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-4">
-            <button  type="button" style="background-color: #e4b355;border-color: #0f0e0e;color: #000;" id="btnSubmit" class="btn btn-primary btn-lg"> ตกลง </button>
+        <div class="col">
+            <button type="button"
+                style="background-color: #e4b355;border-color: #0f0e0e;color: #000;align-items: center;" id="btnSubmit"
+                class="btn btn-primary btn-lg"> ตกลง </button>
         </div>
     </div>
 </body>
@@ -107,26 +129,48 @@
     //             e.preventDefault()
     //         }
     //     })
-    
+
     $("#btnSubmit").click(function () {
         const ipc = window.require("electron").ipcRenderer;
 
-        ipc.send('notes', $('#selproduct').val() )
+        ipc.send('notes', $('#selproduct').val())
 
         window.close();
     });
 
+    function selectGR(grcode) {
+        // alert (grcode);
+        const ipc = window.require("electron").ipcRenderer;
 
-    $.post("https://tidmunzbuffet.com/api_app/product/get_allproduct.php", function (r) {
+        ipc.send('notes', grcode)
 
-        let data = JSON.parse(r)
+        window.close();
+    }
 
-        for (let c in data) {
-            $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name +' '+ data[c].spec_type +' '+ data[c].size_min +'/'+ data[c].size_max +' '+ "</option>")
+    $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
+        let result = JSON.parse(r)
+
+        for (let i in result) {
+            tb = '';
+            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].created_name + '</td><td>'
+                + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>'; $(tb).appendTo("#getgr");
         }
 
     }).fail(function (error) {
 
         $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+        document.getElementById('txtresult').style.color = "red";
     });
+    // $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
+
+    //     let data = JSON.parse(r)
+
+    //     for (let c in data) {
+    //         $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].supname + ' ' + "</option>")
+    //     }
+
+    // }).fail(function (error) {
+
+    //     $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+    // });
 </script>

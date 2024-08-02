@@ -13,7 +13,7 @@ input::-webkit-inner-spin-button {
 
 .tableFixHead {
   overflow-y: auto;
-  height: 700px;
+  height: 20;
 }
 
 .tableFixHead thead th {
