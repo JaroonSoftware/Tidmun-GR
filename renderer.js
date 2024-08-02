@@ -5,7 +5,13 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
   let grcode = accessToken;
  
   $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode: grcode }, function (r) {
-    console.log(r)
+    // console.log(r)
+    // console.log("888")
+    let data = JSON.parse(r)
+
+    for (let c in data) {
+      $('#showdata').append("<option value=" + data[c].grcode + " >" + data[c].grdate + "</option>")
+    }
   });
  
 });

@@ -24,7 +24,8 @@
   <nav class="navbar navbar-dark bg-dark justify-content-center">
     <a class="navbar-brand" href="#">
 
-      <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top" alt="">Product weight system</h3>
+      <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top"
+          alt="">Product weight system</h3>
     </a>
 
   </nav>
@@ -72,18 +73,22 @@
             </div>
 
             <div class="row">
-              <div class="col-md-12">
-                <label for="selproduct">เลขที่ใบรับสินค้า</label>
+              <div class="col-md-4">
+                <label>เลขที่ใบรับสินค้า</label>
                 <select class="form-control" id="selproduct" disabled></select>
               </div>
+              <div class="col-md-4">
+                <label>เลขที่ใบรับสินค้า</label>
+                <select class="form-control" id="showdata"></select>
+              </div>
             </div>
+
             <br>
             <div class="row">
               <div class="col-md-12">
                 <div style="padding-top: 5px;">
-                  <!-- <button onclick="window.open('modal/modal_product.html', '_blank', 'width=200,height=200');" >แก้ไขข้อมูล</button> -->
                   <button class="btn btn-secondary" onclick="createBrowserWindow();">เลือกใบรับสินค้าใหม่</button>
-
+                  <button class="btn btn-secondary" onclick="createBrowserWindow();">ตรวจสอบสินค้า</button>
                 </div>
               </div>
             </div>
@@ -131,7 +136,7 @@
 
         const ipc = require("electron").ipcRenderer;
         // ipc.send('message:Edit', data);
-        ipc.send('edit', data )
+        ipc.send('edit', data)
 
         // ipc.send('notes', $('#selproduct').val() )
       }
@@ -147,9 +152,9 @@
 
           for (let i in result) {
             tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].firstname +'</td><td style="text-align: right;">' 
-              + result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode +'</td><td style="text-align: right;">' 
-                + result[i].empcode +'</td><td style="text-align: center;">' + result[i].firstname +'</td>'; tb += '</tr>';
+            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].firstname + '</td><td style="text-align: right;">'
+              + result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode + '</td><td style="text-align: right;">'
+              + result[i].empcode + '</td><td style="text-align: center;">' + result[i].firstname + '</td>'; tb += '</tr>';
             $(tb).appendTo("#tbmain");
           }
 
@@ -164,13 +169,14 @@
           let data = JSON.parse(r)
 
           for (let c in data) {
-            $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].grcode + ' ' + data[c].grcode + '/' + data[c].grcode + ' ' + "</option>")
+            $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].grcode + ' ' + "</option>")
           }
 
         }).fail(function (error) {
 
           $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
         });
+
 
       });
       const { SerialPort } = require('serialport')
