@@ -14,7 +14,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
     for (let i in result) {
       tb = '';
-      tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(' + result[i].grcode + ');"> Print</button></td>';
+      tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].grcode + '\');"> Print</button></td>';
       tb += '</tr>';
       $(tb).appendTo("#tbmain");
     }
@@ -27,6 +27,39 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 
 });
+
+function PrintBarcode(data) {
+
+	const electron = require('electron')
+// Importing BrowserWindow from Main 
+const BrowserWindow = electron.remote.BrowserWindow;
+
+// var current = document.getElementById('current');
+var options = {
+	silent: false,
+	printBackground: true,
+	color: false,
+	margin: {
+		marginType: 'printableArea'
+	},
+	landscape: false,
+	pagesPerSheet: 1,
+	collate: false,
+	copies: 1,
+	header: 'Header of the Page',
+	footer: 'Footer of the Page'
+}
+
+	// alert('test')
+	let win = BrowserWindow.getFocusedWindow();
+	// let win = BrowserWindow.getAllWindows()[0]; 
+
+	win.webContents.print(options, (success, failureReason) => {
+		if (!success) console.log(failureReason);
+
+		console.log('Print Initiated');
+	});
+}
 
 // ipcRenderer.on("get-token", (event) => {
 
