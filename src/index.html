@@ -73,13 +73,13 @@
             </div>
 
             <div class="row">
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <label>เลขที่ใบรับสินค้า</label>
                 <select class="form-control" id="selproduct" disabled></select>
-              </div>
+              </div> -->
               <div class="col-md-4">
                 <label>เลขที่ใบรับสินค้า</label>
-                <select class="form-control" id="showdata"></select>
+                <select class="form-control" id="showdata" disabled></select>
               </div>
             </div>
 
@@ -122,17 +122,17 @@
 
     <script> 
       document.write(process.versions.node) 
-  </script>, Chrome  
+  </script>
   <script> 
       document.write(process.versions.chrome) 
-  </script>, and Electron  
+  </script>
   <script> 
       document.write(process.versions.electron) 
-  </script>. 
+  </script>
 
   <!-- Adding Individual Renderer Process JS File -->
   <script src="index.js"></script> 
-
+  <script src="../renderer.js"></script>
     
 </body>
 

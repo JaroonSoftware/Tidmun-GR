@@ -153,7 +153,8 @@
         for (let i in result) {
             tb = '';
             tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].created_name + '</td><td>'
-                + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>'; $(tb).appendTo("#getgr");
+                + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>'; 
+                $(tb).appendTo("#getgr");
         }
 
     }).fail(function (error) {
