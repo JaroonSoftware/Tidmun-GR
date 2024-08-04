@@ -19,7 +19,7 @@ var options = {
 } 
 
 current.addEventListener('click', (event) => { 
-	// alert('test')
+	alert('test')
 	let win = BrowserWindow.getFocusedWindow(); 
 	// let win = BrowserWindow.getAllWindows()[0]; 
 
@@ -32,9 +32,9 @@ current.addEventListener('click', (event) => {
 
 
 
-$(document).mousemove(function (event) {
-  $("#tx_empcode").focus();
-});
+// $(document).mousemove(function (event) {
+//   $("#tx_empcode").focus();
+// });
 
 function createBrowserWindow() {
 
@@ -54,18 +54,41 @@ function EditWindow(data) {
 
 var connection;
 var count = 0;
+
+$(document).mousemove(function (event) {
+  $("#tx_empcode").focus();
+});
+
+function createBrowserWindow() {
+
+  const ipc = require("electron").ipcRenderer;
+  ipc.send('message:loginShow');
+
+}
+
+function EditWindow(data) {
+
+  const ipc = require("electron").ipcRenderer;
+  // ipc.send('message:Edit', data);
+  ipc.send('edit', data)
+
+  // ipc.send('notes', $('#selproduct').val() )
+}
+
+var connection;
+var count = 0;
 $(document).ready(function () {
 
 
-  $.post("https://yeeninfrozenfoods.com/api_app/weight_record/get_record.php", function (r) {
+  $.post("https://tidmunzbuffet.com/api_app/weight_record/get_record.php", function (r) {
 
 	let result = JSON.parse(r)
 
 	for (let i in result) {
 	  tb = '';
-	  tb += '<tr id="' + (i + 1) + '"><td>' + result[i].empcode + '</td><td>' + result[i].firstname +'</td><td style="text-align: right;">' 
-		+ result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode +'</td><td style="text-align: right;">' 
-		  + result[i].empcode +'</td><td style="text-align: center;">' + result[i].firstname +'</td>'; tb += '</tr>';
+	  tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].firstname + '</td><td style="text-align: right;">'
+		+ result[i].unit_weight + '</td><td style="text-align: right;">' + result[i].empcode + '</td><td style="text-align: right;">'
+		+ result[i].empcode + '</td><td style="text-align: center;">' + result[i].firstname + '</td>'; tb += '</tr>';
 	  $(tb).appendTo("#tbmain");
 	}
 
@@ -75,18 +98,19 @@ $(document).ready(function () {
 	document.getElementById('txtresult').style.color = "red";
   });
 
-  $.post("https://yeeninfrozenfoods.com/api_app/product/get_allproduct.php", function (r) {
+  $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
 
 	let data = JSON.parse(r)
 
 	for (let c in data) {
-	  $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name + ' ' + data[c].spec_type + ' ' + data[c].size_min + '/' + data[c].size_max + ' ' + "</option>")
+	  $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].grcode + ' ' + "</option>")
 	}
 
   }).fail(function (error) {
 
 	$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
   });
+
 
 });
 const { SerialPort } = require('serialport')
@@ -117,13 +141,13 @@ inputempcode.addEventListener("keypress", function (event) {
 
 	if (inputweight.value > 0) {
 
-	  $.post("https://yeeninfrozenfoods.com/api_app/employee/check_employee.php", { grcode: inputempcode.value }, function (r) {
+	  $.post("https://tidmunzbuffet.com/api_app/employee/check_employee.php", { empcode: inputempcode.value }, function (r) {
 		let response = JSON.parse(r)
 		// console.log(response.status)
 		if (response.status === '1') {
 		  let data = response;
 		  // console.log(data['data'][0]['empcode'])
-		  $.post("https://yeeninfrozenfoods.com/api_app/weight_record/add_record.php", { empcode: data['data'][0]['empcode'], unit_weight: inputweight.value, product_id: $("#selproduct").val(), create_date: data['data'][0]['create_date'] }, function (response2) {
+		  $.post("https://tidmunzbuffet.com/api_app/weight_record/add_record.php", { empcode: data['data'][0]['empcode'], unit_weight: inputweight.value, product_id: $("#selproduct").val(), create_date: data['data'][0]['create_date'] }, function (response2) {
 
 			let r2 = JSON.parse(response2)
 
@@ -173,6 +197,7 @@ inputempcode.addEventListener("keypress", function (event) {
 	event.preventDefault();
   }
 });
+
 
 // You can also require other files to run in this process
 require('./renderer.js')
