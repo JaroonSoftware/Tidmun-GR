@@ -27,6 +27,10 @@ $(document).ready(function () {
 
     for (let c in data) {
       $('#showdata').append("<option value=" + data[c].grcode + " >" + data[c].grcode + "</option>")
+	  $('#showdata20').append("<option value=" + data[c].grcode + " >" + data[c].supcode + "</option>")
+	  $('#datedata').append("<option value=" + data[c].grcode + " >" + data[c].grdate + "</option>")
+	  $('#supname').append("<option>" + data[c].prename + data[c].supname + "</option>")
+	  
     }
   });  
 	

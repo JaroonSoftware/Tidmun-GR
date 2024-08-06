@@ -5,6 +5,9 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
   let grcode = accessToken;
 
   $('#showdata').val(grcode)
+  $('#showdata20').val(grcode)
+  $('#datedata').val(grcode)
+  $('#supname').val(grcode)
   
   $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode: grcode }, function (r) {
 
