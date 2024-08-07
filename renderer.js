@@ -1,21 +1,27 @@
 const { ipcRenderer } = require("electron");
 
 ipcRenderer.on("got-access-token", (event, accessToken) => {
-  // data = accessToken.split(",");
+//   data = accessToken.split(",");
   let grcode = accessToken;
 
-  $('#showdata').val(grcode)
-  $('#showdata20').val(grcode)
-  $('#datedata').val(grcode)
-  $('#supname').val(grcode)
-  
-  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode: grcode }, function (r) {
 
-    let result = JSON.parse(r)
+
+  
+  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode : grcode }, function (datagr) {
+	
+	$('#showdata').val(grcode)
+	$('#showdata20').val(grcode)
+	$('#datedata').val(grcode)
+	
+
+	console.log(datagr);
+    let result = JSON.parse(datagr)
     // alert(result.stcode)
+	$('#supname').val(result[2].stcode)
     $('#tbmain tbody').empty();
 
     for (let i in result) {
+	
       tb = '';
       tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].grcode + '\');"> Print</button></td>';
       tb += '</tr>';

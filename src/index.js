@@ -18,25 +18,21 @@ function PrintBarcode(data) {
 }
 
 var count = 0;
-$(document).ready(function () {
-
+// $(document).ready(function () {
 	$.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
     // console.log(r)
     // console.log("888")
-    let data = JSON.parse(r)
-
-    for (let c in data) {
-      $('#showdata').append("<option value=" + data[c].grcode + " >" + data[c].grcode + "</option>")
-	  $('#showdata20').append("<option value=" + data[c].grcode + " >" + data[c].supcode + "</option>")
-	  $('#datedata').append("<option value=" + data[c].grcode + " >" + data[c].grdate + "</option>")
-	  $('#supname').append("<option>" + data[c].prename + data[c].supname + "</option>")
+    // let data = JSON.parse(r)
+    // for (let c in data) {
+    //   $('#showdata').append("<option value=" + data[c].grcode + " >" + data[c].grcode + "</option>")
+	//   $('#showdata20').append("<option value=" + data[c].grcode + " >" + data[c].supcode + "</option>")
+	//   $('#datedata').append("<option value=" + data[c].grcode + " >" + data[c].grdate + "</option>")
+	//   $('#supname').val( data[c].prename +' '+ data[c].supname )
 	  
-    }
+    // }
   });  
-	
+// });
 
-
-});
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
 const port = new SerialPort({ path: 'COM1', baudRate: 9600 }, function (err) {
