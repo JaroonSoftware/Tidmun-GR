@@ -11,15 +11,16 @@ function createBrowserWindow() {
 
 }
 
-function PrintBarcode(data) {
+function openmodalexamine() {
 
-	
+	const ipc = require("electron").ipcRenderer;
+	ipc.send('message:loginShow');
 
 }
 
 var count = 0;
 // $(document).ready(function () {
-	$.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
+	// $.post("https://tidmunzbuffet.com/api_app/gr/getsup_grdetail.php", function (r) {
     // console.log(r)
     // console.log("888")
     // let data = JSON.parse(r)
@@ -30,7 +31,7 @@ var count = 0;
 	//   $('#supname').val( data[c].prename +' '+ data[c].supname )
 	  
     // }
-  });  
+//   });  
 // });
 
 const { SerialPort } = require('serialport')

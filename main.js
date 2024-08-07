@@ -66,8 +66,6 @@ function createWindow() {
     },
   });
 
-  
-  
 
   editwindow.loadFile("src/modal/modal_edit.html");
   // editwindow.setIcon('assets/icons/win/icon.ico');

@@ -4,24 +4,22 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 //   data = accessToken.split(",");
   let grcode = accessToken;
 
-
-
-  
-  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode : grcode }, function (datagr) {
-	
+  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode : grcode }, function (grhead) {
+	// console.log(grhead);
+    let result = JSON.parse(grhead)
 	$('#showdata').val(grcode)
-	$('#showdata20').val(grcode)
-	$('#datedata').val(grcode)
-	
+	$('#showdata20').val(result[0].supcode)
+	$('#datedata').val(result[0].grdate)
+	$('#supname').val(result[0].supname)
+  
+  });
 
-	console.log(datagr);
-    let result = JSON.parse(datagr)
-    // alert(result.stcode)
-	$('#supname').val(result[2].stcode)
+  $.post("https://tidmunzbuffet.com/api_app/gr/getsup_grdetail.php", { grcode : grcode }, function (grdetail) {
+	// console.log(grdetail);
+    let result = JSON.parse(grdetail)
     $('#tbmain tbody').empty();
 
     for (let i in result) {
-	
       tb = '';
       tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].grcode + '\');"> Print</button></td>';
       tb += '</tr>';
@@ -30,7 +28,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
   }).fail(function (error) {
 
-    $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+    $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้') 
   });
 
 
