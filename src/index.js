@@ -10,11 +10,10 @@ function createBrowserWindow() {
 	ipc.send('message:loginShow');
 
 }
-
-function openmodalexamine() {
+function createBrowserWindow2() {
 
 	const ipc = require("electron").ipcRenderer;
-	ipc.send('message:loginShow');
+	ipc.send('message:loginShow2');
 
 }
 

@@ -24,7 +24,7 @@ function createWindow() {
     const child = new BrowserWindow({
       autoHideMenuBar: true,
       parent: mainWindow,
-      height: 700,
+      height: 1000,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -34,6 +34,21 @@ function createWindow() {
     // child.setIcon('assets/icons/win/icon.ico');
     child.loadFile("src/modal/modal_product.html");
   }
+  function showLoginWindow2() {
+    const child = new BrowserWindow({
+      autoHideMenuBar: true,
+      parent: mainWindow,
+      height: 1000,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
+      },
+    });
+    // child.setIcon('assets/icons/win/icon.ico');
+    child.loadFile("src/modal/modal_examine.html");
+  }
+  
 
   const electronLocalshortcut = require("electron-localshortcut");
 
@@ -82,6 +97,9 @@ function createWindow() {
 
   ipc.on("message:loginShow", () => {
     showLoginWindow();
+  });
+  ipc.on("message:loginShow2", () => {
+    showLoginWindow2();
   });
 
   electronLocalshortcut.register(mainWindow, "Escape", () => {
