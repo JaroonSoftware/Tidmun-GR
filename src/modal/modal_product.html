@@ -123,21 +123,6 @@
 </html>
 <script>
 
-    // document
-    //     .addEventListener("keydown", e => {
-    //         if (e.key === "F10") {
-    //             e.preventDefault()
-    //         }
-    //     })
-
-    $("#btnSubmit").click(function () {
-        const ipc = window.require("electron").ipcRenderer;
-
-        ipc.send('notes', $('#selproduct').val())
-
-        window.close();
-    });
-
     function selectGR(grcode) {
         // alert (grcode);
         const ipc = window.require("electron").ipcRenderer;
@@ -163,16 +148,5 @@
         $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
         document.getElementById('txtresult').style.color = "red";
     });
-    // $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
 
-    //     let data = JSON.parse(r)
-
-    //     for (let c in data) {
-    //         $('#selproduct').append("<option value=" + data[c].grcode + " >" + data[c].grcode + ' ' + data[c].supname + ' ' + "</option>")
-    //     }
-
-    // }).fail(function (error) {
-
-    //     $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-    // });
 </script>

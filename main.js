@@ -38,7 +38,8 @@ function createWindow() {
     const child = new BrowserWindow({
       autoHideMenuBar: true,
       parent: mainWindow,
-      height: 1000,
+      height: 700,
+      width: 1000,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,

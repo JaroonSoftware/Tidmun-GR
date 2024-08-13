@@ -2,245 +2,150 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>TIDMUN</title>
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.css">
-    <!-- <link rel="icon" href="../assets/icons/win/icon.ico"> -->
-    <!-- Insert this line above script imports  -->
-    <script>
-        if (typeof module === 'object') { window.module = module; module = undefined; }
-    </script>
-    <!-- normal script imports etc  -->
-    <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <!-- Insert this line after script imports -->
-    <script>if (window.module) module = window.module;</script>
-    <style>
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <title>TIDMUN</title>
+  <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.css">
+  <!-- <link rel="icon" href="../assets/icons/win/icon.ico"> -->
+  <!-- Insert this line above script imports  -->
+  <script>
+    if (typeof module === 'object') { window.module = module; module = undefined; }
+  </script>
+  <!-- normal script imports etc  -->
+  <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+  <style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-        .pane {
-            display: inline-block;
-            overflow-y: scroll;
-            max-height: 650px;
-        }
+    .pane {
+      display: inline-block;
+      overflow-y: scroll;
+      max-height: 650px;
+    }
 
-        .tableFixHead {
-            overflow-y: auto;
-            /* make the table scrollable if height is more than 200 px  */
-            height: 700px;
-            /* gives an initial height of 200px to the table */
-        }
+    .tableFixHead {
+      overflow-y: auto;
+      /* make the table scrollable if height is more than 200 px  */
+      height: 700px;
+      /* gives an initial height of 200px to the table */
+    }
 
-        .tableFixHead thead th {
-            position: sticky;
-            /* make the table heads sticky */
-            top: 0px;
-            /* table head will be placed from the top of the table and sticks to it */
-        }
+    .tableFixHead thead th {
+      position: sticky;
+      /* make the table heads sticky */
+      top: 0px;
+      /* table head will be placed from the top of the table and sticks to it */
+    }
 
-        table {
-            border-collapse: collapse;
-            /* make the table borders collapse to each other */
-            width: 100%;
-        }
+    table {
+      border-collapse: collapse;
+      /* make the table borders collapse to each other */
+      width: 100%;
+    }
 
-        th,
-        td {
-            padding: 8px 16px;
-            border: 1px solid #0f0e0e;
-        }
+    th,
+    td {
+      padding: 8px 16px;
+      border: 1px solid #0f0e0e;
+    }
 
-        th {
-            background: #e4b355;
-        }
+    th {
+      background: #e4b355;
+    }
 
-        body,
-        html {
-            height: 100%;
-            color: #0f0e0e;
-            background-color: #ccc;
-            overflow-x: hidden;
-            /* background-image: url(./assets/icons/BG-login.png);
+    body,
+    html {
+      height: 100%;
+      color: #0f0e0e;
+      background-color: #ccc;
+      overflow-x: hidden;
+      /* background-image: url(./assets/icons/BG-login.png);
             
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed; */
 
 
-        }
-    </style>
+    }
+  </style>
 </head>
 
 <body>
-    <br>
-    <div class="container-fluid">
+  <br>
+  <div class="container-fluid">
+    <div class="row">
+      <h2>ตรวจสอบสินค้า</h2>
+      <div style="padding: 2%;">
         <div class="row">
-            <h2>ตรวจสอบสินค้า</h2>
-            <div>
-                <div class="tableFixHead">
-                    <table id="getgr">
-                        <thead>
-                            <tr>
-                                <th>รหัสสินค้า</th>
-                                <th>ชื่อสินค้า</th>
-                                <th>ราคา</th>
-                            </tr>
-                        </thead>
-                        <tbody style="background-color: #ffffff;">
-
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
+          <div class="col-md-4">
+            <label>รหัส GR</label>
+            <input class="form-control" id="grcode" readonly></input>
+          </div>
+          <div class="col-md-4">
+            <label>รหัสสินค้า</label>
+            <input class="form-control" id="stcode" readonly></input>
+          </div>
+          <div class="col-md-4">
+            <label>ชื่อสินค้า</label>
+            <input class="form-control" id="showdata" readonly></input>
+          </div>
         </div>
-    </div>
-    <br>
-    <div class="col-md-6" style="position: absolute;bottom: 20px;right: 0px;">
-        <div>
-            <p style="color: crimson; text-align: center;">**** แสกน Barcode เพื่อตรวจสอบข้อมูล ****</p>
-            <input type="text" id="tx_itempcode" class="form-control-lg"
-                style="width: 95%;height:70px;font-size: 40px;text-align: right;border-color: #0f0e0e;"
-                placeholder="สแกนบาร์โค้ดที่นี่" autofocus />
-            <!-- <span id="statuscon" style="float: right;padding-top: 5px;">Connecting <img id="imgstatus"src="assets/icons/connect.png" width="15px" height="15px"></span> -->
+        <div class="row" style="padding-top: 2%;">
+          <div class="col-md-4">
+            <label>ราคา</label>
+            <input class="form-control" id="showdata20" readonly></input>
+          </div>
+          <div class="col-md-4">
+            <label>รหัสผู้ขาย</label>
+            <input class="form-control" id="supcode" readonly></input>
+          </div>
+          <div class="col-md-4">
+            <label>ชื่อผู้ขาย</label>
+            <input class="form-control" id="namesup" readonly></input>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <br>
+  <div class="col-md-6" style="position: absolute;bottom: 20px;right: 0px;">
+    <div>
+      <p style="color: crimson; text-align: center;">**** แสกน Barcode เพื่อตรวจสอบข้อมูล ****</p>
+      <input type="text" id="tx_itempcode" class="form-control-lg"
+        style="width: 95%;height:70px;font-size: 40px;text-align: right;border-color: #0f0e0e;"
+        placeholder="สแกนบาร์โค้ดที่นี่" autofocus />
+    </div>
+  </div>
 </body>
 
 </html>
 <script>
+  //----- ล๊อก cursor ไว้ที่ input-----------
+  $(document).mousemove(function (event) {
+    $("#tx_itempcode").focus();
+  });
+  //---------------------------------------
 
-    $(document).mousemove(function (event) {
-        $("#tx_itempcode").focus();
-      });
-
-      var connection;
-      var count = 0;
-      $(document).ready(function () {
-
-
-        $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
-
-          let result = JSON.parse(r)
-
-          for (let i in result) {
-            tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].create_date + '</td><td>' + result[i].empcode + '</td><td>' + result[i].firstname + " " + result[i].lastname + '</td><td>' + result[i].unit_weight + '</td><td>' + result[i].shrimp_shell + '</td><td><button class="btn btn-secondary" onclick="EditWindow(' + result[i].id + ');"> Edit</button></td>';
-            tb += '</tr>';
-            $(tb).appendTo("#tbmain");
-          }
-
-        }).fail(function (error) {
-
-          $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-          document.getElementById('txtresult').style.color = "red";
-        });
-
-        $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
-
-          let data = JSON.parse(r)
-
-          for (let c in data) {
-            $('#selproduct').append("<option value=" + data[c].product_id + " >" + data[c].spec_name + ' ' + data[c].spec_type + ' ' + data[c].size_min + '/' + data[c].size_max + ' ' + "</option>")
-          }
-
-        }).fail(function (error) {
-
-          $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-        });
-
-      });
-      const { SerialPort } = require('serialport')
-      const { ReadlineParser } = require('@serialport/parser-readline')
-      const port = new SerialPort({ path: 'COM1', baudRate: 9600 }, function (err) {
-        if (err) {
-          document.getElementById('txtresult').innerHTML = 'เชื่อมต่อเครื่องชั่งน้ำหนักไม่สำเร็จ'
-          document.getElementById('txtresult').style.color = "red";
-          return console.log('Error: ', err.message)
-        }
-      })
-
-      const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }))
-      parser.on('data', addText)
-
-      function addText(event) {
-        // console.log(event)
-        document.getElementById("tx_unitweigt").value = parseFloat(event.substring(1, 8)).toFixed(2);
+  var inputempcode = document.getElementById("tx_itempcode");
+  inputempcode.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      inputempcode.click(alert(tx_itempcode.value));
+      event.preventDefault();
+      if (inputempcode.value > 0) {
+        $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (grdetail) {
+          let result = JSON.parse(grdetail)
+	        $('#grcode').val(result[0].grcode)
+          $('#supcode').val(result[0].supcode)
+        })
       }
+      inputempcode.value = null;
 
-      var inputempcode = document.getElementById("tx_itempcode");
-      var inputweight = document.getElementById("tx_unitweigt");
-      var str;
-      var sql;
-
-      inputempcode.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-
-          if (inputweight.value > 0) {
-
-            $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", { empcode: inputempcode.value }, function (r) {
-              let response = JSON.parse(r)
-              // console.log(response.status)
-              if (response.status === '1') {
-                let data = response;
-                // console.log(data['data'][0]['empcode'])
-                $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", { empcode: data['data'][0]['empcode'], unit_weight: inputweight.value, product_id: $("#selproduct").val(), create_date: data['data'][0]['create_date'] }, function (response2) {
-
-                  let r2 = JSON.parse(response2)
-
-                  if (r2.status === 1) {
-                    count++;
-                    str = '';
-                    str += '<tr id="' + count + '"><td>' + data['data'][0]['display_date'] + '</td><td>' + data['data'][0]['empcode'] + '</td><td>' + data['data'][0]['firstname'] + ' ' + data['data'][0]['lastname'] + '</td><td>' + inputweight.value + '</td><td>0</td><td><button class="btn btn-secondary" onclick="EditWindow(' + r2.id + ');"> Edit</button></td>';
-                    str += '</tr>';
-
-                    $("#tbmain").prepend(str);
-                    const elmnt = document.querySelector("table tr:last-child");
-                    elmnt.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
-                    document.getElementById('txtresult').innerHTML = 'บันทึกข้อมูลรหัส ' + data['data'][0]['empcode'] + ' สำเร็จ '
-                    document.getElementById('txtresult').style.color = "#4DBE05";
-                  }
-                  else {
-                    document.getElementById('txtresult').innerHTML = r2.message
-                    document.getElementById('txtresult').style.color = "red";
-                  }
-                }).fail(function (error) {
-
-                  $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-                });
-              }
-              else if (response.status === '2') {
-                document.getElementById('txtresult').innerHTML = response.message
-                document.getElementById('txtresult').style.color = "red";
-              }
-              else {
-                document.getElementById('txtresult').innerHTML = 'อินเตอร์เน็ตมีปัญหา กรุณากรอกอีกครั้ง'
-                document.getElementById('txtresult').style.color = "red";
-              }
-
-
-
-            });
-
-
-          } else {
-
-            document.getElementById('txtresult').innerHTML = 'กรุณาชั่งสินค้าก่อน ยิง Barcode'
-            document.getElementById('txtresult').style.color = "red";
-
-          }
-          inputempcode.value = null;
-          inputempcode.click();
-          event.preventDefault();
-        }
-      });
-
-      // You can also require other files to run in this process
-      require('./renderer.js')
+    }
+  });
 </script>
