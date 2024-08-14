@@ -84,7 +84,7 @@
       <div style="padding: 2%;">
         <div class="row">
           <div class="col-md-4">
-            <label>รหัส GR</label>
+            <label>เลขที่ GR</label>
             <input class="form-control" id="grcode" readonly></input>
           </div>
           <div class="col-md-4">
@@ -107,6 +107,17 @@
           </div>
           <div class="col-md-4">
             <label>ชื่อผู้ขาย</label>
+            <input class="form-control" id="namesup" readonly></input>
+          </div>
+        </div>
+        <div class="row" style="padding-top: 2%;">
+
+          <div class="col-md-4">
+            <label>รหัสผู้ซื้อ</label>
+            <input class="form-control" id="supcode" readonly></input>
+          </div>
+          <div class="col-md-4">
+            <label>ชื่อผู้ซื้อ</label>
             <input class="form-control" id="namesup" readonly></input>
           </div>
         </div>
@@ -140,7 +151,7 @@
       if (inputempcode.value > 0) {
         $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (grdetail) {
           let result = JSON.parse(grdetail)
-	        $('#grcode').val(result[0].grcode)
+          $('#grcode').val(result[0].grcode)
           $('#supcode').val(result[0].supcode)
         })
       }
