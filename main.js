@@ -51,41 +51,37 @@ function createWindow() {
   }
 
   function printBarcode() {
-    const formbarcode = new BrowserWindow({
-      autoHideMenuBar: true,
-      parent: mainWindow,
-      height: 700,
-      width: 1000,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-        enableRemoteModule: true,
-      },
-    });
+    const formbarcode = new BrowserWindow({ width: 400, height: 400, resizable: false });
     // child.setIcon('assets/icons/win/icon.ico');
-    formbarcode.loadFile("src/form/tagbarcode.html");
+
+    ipc.on("print-barcode", (event, data) => {
+      accessToken = data;
+      formbarcode.show();
+      formbarcode.webContents.send("send-barcode", accessToken);
+    });
 
     // var current = document.getElementById('current');
     var options = {
       silent: false,
       printBackground: true,
-      color: false,
+      color: true,
       margin: {
         marginType: 'printableArea'
       },
-      landscape: false,
+      landscape: true,
       pagesPerSheet: 1,
       collate: false,
       copies: 1,
       header: 'Header of the Page',
       footer: 'Footer of the Page'
     }
+    formbarcode.webContents.on('did-finish-load', () => {
+      formbarcode.webContents.print(options, (success, failureReason) => {
+        if (!success) console.log(failureReason);
 
-    formbarcode.webContents.print(options, (success, failureReason) => {
-      if (!success) console.log(failureReason);
-
-      console.log('Print Initiated');
-    });
+        console.log('Print Initiated');
+      });
+    })
   }
 
   const electronLocalshortcut = require("electron-localshortcut");
@@ -132,7 +128,7 @@ function createWindow() {
     editwindow.show();
     editwindow.webContents.send("send-token", accessToken);
   });
-
+  
   ipc.on("message:loginShow", () => {
     showLoginWindow();
   });

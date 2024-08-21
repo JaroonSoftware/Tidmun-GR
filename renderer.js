@@ -40,7 +40,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 function PrintBarcode(data) {
 
 	const ipc = require("electron").ipcRenderer;
-	ipc.send('message:loginShow2');
+	ipc.send('message:printtags');
 
 	// const electron = require('electron')
 	// // Importing BrowserWindow from Main 
