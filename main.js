@@ -49,7 +49,44 @@ function createWindow() {
     // child.setIcon('assets/icons/win/icon.ico');
     child.loadFile("src/modal/modal_examine.html");
   }
-  
+
+  function printBarcode() {
+    const formbarcode = new BrowserWindow({
+      autoHideMenuBar: true,
+      parent: mainWindow,
+      height: 700,
+      width: 1000,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
+      },
+    });
+    // child.setIcon('assets/icons/win/icon.ico');
+    formbarcode.loadFile("src/form/tagbarcode.html");
+
+    // var current = document.getElementById('current');
+    var options = {
+      silent: false,
+      printBackground: true,
+      color: false,
+      margin: {
+        marginType: 'printableArea'
+      },
+      landscape: false,
+      pagesPerSheet: 1,
+      collate: false,
+      copies: 1,
+      header: 'Header of the Page',
+      footer: 'Footer of the Page'
+    }
+
+    formbarcode.webContents.print(options, (success, failureReason) => {
+      if (!success) console.log(failureReason);
+
+      console.log('Print Initiated');
+    });
+  }
 
   const electronLocalshortcut = require("electron-localshortcut");
 
@@ -99,8 +136,13 @@ function createWindow() {
   ipc.on("message:loginShow", () => {
     showLoginWindow();
   });
+
   ipc.on("message:loginShow2", () => {
     showLoginWindow2();
+  });
+
+  ipc.on("message:printtags", () => {
+    printBarcode();
   });
 
   electronLocalshortcut.register(mainWindow, "Escape", () => {
@@ -108,7 +150,7 @@ function createWindow() {
   });
 
   showLoginWindow();
-  
+
   mainWindow.loadFile("src/index.html");
   // mainWindow.setIcon("assets/icons/win/icon.ico");
 }
