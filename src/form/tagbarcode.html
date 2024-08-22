@@ -1,46 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-    <title>JsBarcode</title> 
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" >
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>JsBarcode</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../node_modules/@fortawesome/fontawesome-free/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../node_modules/sweetalert2/dist/sweetalert2.css"
+    />
+
+    <!-- Insert this line above script imports  -->
+    <script>
+      if (typeof module === "object") {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+
+    <!-- normal script imports etc  -->
+    <script
+      type="text/javascript"
+      src="../../node_modules/jquery/dist/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../node_modules/sweetalert2/dist/sweetalert2.js"
+    ></script>
+
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
-</head>
-<body>
-  
-  <br />
-<br />
-<style type="text/css">
-.mycss{
-    border:1px solid #CCC;
-    padding:10px;   
-}
-</style>
- <div style="width:400px;margin:auto;">
-    <svg id="barcode"></svg>
-    <br>
-    <svg class="mycss mybarcode"></svg>
- </div>
-  
-<script type="text/javascript">
+  </head>
+  <body>
+    <br />
+    <br />
+    <style type="text/css">
+      .mycss {
+        border: 3px solid #000;
+        font-family:'C39HrP72DlTt';
+  font-size: 6em;
+  font-weight: normal;
+        
+      }
+    </style>
+    <div style="width: 400px; margin: auto">
+      <!-- <svg id="barcode"></svg>
+      <br /> -->
+      <div style="text-align: center">
+        <svg class="mycss mybarcode"></svg>
+      </div>
+    </div>
 
-const { ipcRenderer } = require("electron");
-        // alert('test')
+    <script type="text/javascript">
+      const { ipcRenderer } = require("electron");
+      // alert('test')
 
-        ipcRenderer.on("send-barcode", (event, accessToken) => {
+      ipcRenderer.on("send-barcode", (event, accessToken) => {        
+        const stcode = accessToken;
 
-            const stcode = accessToken;
-            alert(stcode)
-            
-        //  JsBarcode("element selector", "ค่าหรือข้อความที่จะแสดง");       
-            JsBarcode("#barcode", stcode);   // กรณีใช้ผ่าน id   
-            JsBarcode(".mybarcode", "ninenik.com");  // กรณีใช้ผาน css class    
+        $.post("https://tidmunzbuffet.com/api_app/barcode/add_barcode.php", { idcode: accessToken }, function (r) {
+                let response = JSON.parse(r);
+                console.log(response)
+                // $('#weight_record_id').val(accessToken)
+                // $('#empcode').val(response.empcode)
+                // $('#unit_weight').val(response.unit_weight)
+                // $('#product_weight').val(response.product_weight)
+                // $('#shrimp_shell').val(response.shrimp_shell)
+                // $('#remark').val(response.remark)
+                // $('#date').val(response.date)
+                // $('#time').val(response.time)
+            })
 
-            // console.log(accessToken)
-        });
+        // alert(stcode);
+        // JsBarcode("#barcode", stcode); // กรณีใช้ผ่าน id
+        JsBarcode(".mybarcode", stcode); // กรณีใช้ผาน css class
 
-    
-</script>
-</body>
+        //  JsBarcode("element selector", "ค่าหรือข้อความที่จะแสดง");
+
+        // console.log(accessToken)
+      });
+    </script>
+  </body>
 </html>

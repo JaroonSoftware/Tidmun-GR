@@ -21,7 +21,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 		for (let i in result) {
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].grcode + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\');">เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#tbmain");
 		}
@@ -40,7 +40,10 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 function PrintBarcode(data) {
 
 	const ipc = require("electron").ipcRenderer;
-	ipc.send('message:printtags');
+	ipc.send('message:printtags', data);
+
+        // ipc.send('message:Edit', data);
+	
 
 	// const electron = require('electron')
 	// // Importing BrowserWindow from Main 

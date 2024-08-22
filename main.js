@@ -50,15 +50,15 @@ function createWindow() {
     child.loadFile("src/modal/modal_examine.html");
   }
 
-  function printBarcode() {
-    const formbarcode = new BrowserWindow({ width: 400, height: 400, resizable: false });
-    // child.setIcon('assets/icons/win/icon.ico');
-
-    ipc.on("print-barcode", (event, data) => {
-      accessToken = data;
-      formbarcode.show();
-      formbarcode.webContents.send("send-barcode", accessToken);
+  function printBarcode(data) {
+    const formbarcode = new BrowserWindow({
+      width: 400, height: 400, resizable: false, webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      }
     });
+    // child.setIcon('assets/icons/win/icon.ico');
+    formbarcode.loadFile("src/form/tagbarcode.html");
 
     // var current = document.getElementById('current');
     var options = {
@@ -76,6 +76,8 @@ function createWindow() {
       footer: 'Footer of the Page'
     }
     formbarcode.webContents.on('did-finish-load', () => {
+      let accessToken = data;
+      formbarcode.webContents.send("send-barcode", accessToken);
       formbarcode.webContents.print(options, (success, failureReason) => {
         if (!success) console.log(failureReason);
 
@@ -128,7 +130,7 @@ function createWindow() {
     editwindow.show();
     editwindow.webContents.send("send-token", accessToken);
   });
-  
+
   ipc.on("message:loginShow", () => {
     showLoginWindow();
   });
@@ -137,8 +139,9 @@ function createWindow() {
     showLoginWindow2();
   });
 
-  ipc.on("message:printtags", () => {
-    printBarcode();
+  ipc.on("message:printtags", (event, data) => {
+
+    printBarcode(data);
   });
 
   electronLocalshortcut.register(mainWindow, "Escape", () => {
