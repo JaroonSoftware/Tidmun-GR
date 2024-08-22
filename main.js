@@ -20,7 +20,7 @@ function createWindow() {
     },
   });
 
-  function showLoginWindow() {
+  function Select_PO() {
     const child = new BrowserWindow({
       autoHideMenuBar: true,
       parent: mainWindow,
@@ -34,7 +34,7 @@ function createWindow() {
     // child.setIcon('assets/icons/win/icon.ico');
     child.loadFile("src/modal/modal_product.html");
   }
-  function showLoginWindow2() {
+  function Show_Modal_Examine() {
     const child = new BrowserWindow({
       autoHideMenuBar: true,
       parent: mainWindow,
@@ -132,11 +132,11 @@ function createWindow() {
   });
 
   ipc.on("message:loginShow", () => {
-    showLoginWindow();
+    Select_PO();
   });
 
   ipc.on("message:loginShow2", () => {
-    showLoginWindow2();
+    Show_Modal_Examine();
   });
 
   ipc.on("message:printtags", (event, data) => {
@@ -148,7 +148,7 @@ function createWindow() {
     mainWindow.close();
   });
 
-  showLoginWindow();
+  Select_PO();
 
   mainWindow.loadFile("src/index.html");
   // mainWindow.setIcon("assets/icons/win/icon.ico");

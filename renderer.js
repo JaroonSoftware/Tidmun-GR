@@ -17,15 +17,13 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 	$.post("https://tidmunzbuffet.com/api_app/gr/getsup_grdetail.php", { grcode: grcode }, function (grdetail) {
 		// console.log(grdetail);
 		let result = JSON.parse(grdetail)
-		$('#tbmain tbody').empty();
-
+		$('#TM_Table_Quantity tbody').empty();
 		for (let i in result) {
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].stcode + '\');">เลือก</button></td>';
 			tb += '</tr>';
-			$(tb).appendTo("#tbmain");
+			$(tb).appendTo("#TM_Table_Main");
 		}
-
 	}).fail(function (error) {
 
 		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
@@ -76,6 +74,23 @@ function PrintBarcode(data) {
 	// });
 }
 
+function Show_Item(){
+	$.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
+        let result = JSON.parse(r)
+
+		for (let i in result) {
+			tb = '';
+			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].supname + '</td><td>' + result[i].total_price + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\');">Print</button></td>';
+			tb += '</tr>';
+			$(tb).appendTo("#TM_Table_Quantity");
+		}
+
+    }).fail(function (error) {
+
+        $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+        document.getElementById('txtresult').style.color = "red";
+    });
+}
 // ipcRenderer.on("get-token", (event) => {
 
 //   $('#tbmain tbody').empty();

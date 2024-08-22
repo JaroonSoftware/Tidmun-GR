@@ -66,20 +66,19 @@
         <div class="row">
           <div class="col-md-12" style="padding-top: 5px;">
             <div>
-              <button class="btn btn-secondary" onclick="createBrowserWindow();">เลือกใบรับสินค้าใหม่</button>
-              <button class="btn btn-secondary" onclick="createBrowserWindow2();">ตรวจสอบสินค้า</button>
+              <button class="btn btn-secondary" onclick="Select_PO();">เลือกใบรับสินค้าใหม่</button>
+              <button class="btn btn-secondary" onclick="Show_Modal_Examine();">ตรวจสอบสินค้า</button>
             </div>
           </div>
         </div>
         <br>
         <div class="tableFixHead" style="overflow: hidden;">
-          <table id="tbmain">
+          <table id="TM_Table_Main">
             <thead>
               <tr>
                 <th>รหัสสินค้า</th>
                 <th>ชื่อสินค้า</th>
                 <th>จำนวน</th>
-                <th>ราคาต่อหน่วย</th>
                 <th>ราคา</th>
                 <th>เพิ่มเติม</th>
               </tr>
@@ -94,13 +93,11 @@
       <br>
       <div class="col-md-6 ">
         <div class="tableFixHead" style="overflow: hidden;">
-          <table id="tbmain">
+          <table id="TM_Table_Quantity">
             <thead>
               <tr>
                 <th>รหัสสินค้า</th>
                 <th>ชื่อสินค้า</th>
-                <th>จำนวน</th>
-                <th>ราคาต่อหน่วย</th>
                 <th>ราคา</th>
                 <th>เพิ่มเติม</th>
               </tr>
