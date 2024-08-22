@@ -24,7 +24,7 @@ include '../conn.php';
 
         if ($stmt->execute()) {
             http_response_code(200);
-            $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'id' => $conn->lastInsertId()];
+            $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $conn->lastInsertId()];
         } else {
             $response = ['status' => 0, 'message' => 'Error! ติดต่อโปรแกรมเมอร์'];
         }

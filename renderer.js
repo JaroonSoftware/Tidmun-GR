@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const ipc = require("electron").ipcRenderer;
 
 ipcRenderer.on("got-access-token", (event, accessToken) => {
 	//   data = accessToken.split(",");
@@ -21,7 +22,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 		for (let i in result) {
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].price + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + grcode + '\');">เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#tbmain");
 		}
@@ -35,15 +36,16 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 });
 
+function PrintBarcode(stcode, grcode) {
+	// alert(stcode)	
+	// alert($('#tx_unitweigt').val())
 
+	var jsonData = { "stcode": stcode, "grcode": grcode, "unit_weight": $('#tx_unitweigt').val() };
 
-function PrintBarcode(data) {
+	ipc.send('message:printtags', jsonData);
 
-	const ipc = require("electron").ipcRenderer;
-	ipc.send('message:printtags', data);
+	// ipc.send('message:Edit', data);
 
-        // ipc.send('message:Edit', data);
-	
 
 	// const electron = require('electron')
 	// // Importing BrowserWindow from Main 

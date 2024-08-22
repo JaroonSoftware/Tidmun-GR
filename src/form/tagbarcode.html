@@ -41,8 +41,12 @@
       type="text/javascript"
       src="../../node_modules/sweetalert2/dist/sweetalert2.js"
     ></script>
+    <script
+      type="text/javascript"
+      src="../../node_modules/jsbarcode//dist/JsBarcode.all.js"
+    ></script>
 
-    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script> -->
   </head>
   <body>
     <br />
@@ -50,10 +54,9 @@
     <style type="text/css">
       .mycss {
         border: 3px solid #000;
-        font-family:'C39HrP72DlTt';
-  font-size: 6em;
-  font-weight: normal;
-        
+        font-family: "C39HrP72DlTt";
+        font-size: 6em;
+        font-weight: bold;
       }
     </style>
     <div style="width: 400px; margin: auto">
@@ -68,25 +71,25 @@
       const { ipcRenderer } = require("electron");
       // alert('test')
 
-      ipcRenderer.on("send-barcode", (event, accessToken) => {        
-        const stcode = accessToken;
+      ipcRenderer.on("send-barcode", (event, accessToken) => {
+        // const stcode = accessToken;
 
-        $.post("https://tidmunzbuffet.com/api_app/barcode/add_barcode.php", { idcode: accessToken }, function (r) {
-                let response = JSON.parse(r);
-                console.log(response)
-                // $('#weight_record_id').val(accessToken)
-                // $('#empcode').val(response.empcode)
-                // $('#unit_weight').val(response.unit_weight)
-                // $('#product_weight').val(response.product_weight)
-                // $('#shrimp_shell').val(response.shrimp_shell)
-                // $('#remark').val(response.remark)
-                // $('#date').val(response.date)
-                // $('#time').val(response.time)
-            })
+        console.log(accessToken.stcode)
+
+        $.post(
+          "https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
+          { stcode: accessToken.stcode,grcode:accessToken.grcode,unit_weight:accessToken.unit_weight },
+          function (response2) {
+            let response = JSON.parse(response2);
+            // console.log(response);
+            // alert(response.barcode_id)
+            JsBarcode(".mybarcode", response.barcode_id);
+          }
+        );
 
         // alert(stcode);
         // JsBarcode("#barcode", stcode); // กรณีใช้ผ่าน id
-        JsBarcode(".mybarcode", stcode); // กรณีใช้ผาน css class
+        // กรณีใช้ผาน css class
 
         //  JsBarcode("element selector", "ค่าหรือข้อความที่จะแสดง");
 

@@ -52,7 +52,7 @@ function createWindow() {
 
   function printBarcode(data) {
     const formbarcode = new BrowserWindow({
-      width: 400, height: 400, resizable: false, webPreferences: {
+      width: 400, height: 400, resizable: true, webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       }
@@ -78,6 +78,14 @@ function createWindow() {
     formbarcode.webContents.on('did-finish-load', () => {
       let accessToken = data;
       formbarcode.webContents.send("send-barcode", accessToken);
+
+      ipc.on("print", (event, data) => {
+        accessToken = data;
+    
+        mainWindow.webContents.send("got-access-token", accessToken);
+        event.sender.send("ok", "Hello World!");
+      });
+
       formbarcode.webContents.print(options, (success, failureReason) => {
         if (!success) console.log(failureReason);
 
