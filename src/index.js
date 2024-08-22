@@ -4,13 +4,13 @@ $(document).mousemove(function (event) {
 	$("#tx_empcode").focus();
 });
 
-function createBrowserWindow() {
+function Select_PO() {
 
 	const ipc = require("electron").ipcRenderer;
 	ipc.send('message:loginShow');
 
 }
-function createBrowserWindow2() {
+function Show_Modal_Examine() {
 
 	const ipc = require("electron").ipcRenderer;
 	ipc.send('message:loginShow2');
@@ -72,7 +72,7 @@ inputempcode.addEventListener("keypress", function (event) {
 					str += '<tr id="' + count + '"><td>' + data['data'][0]['display_date'] + '</td><td>' + data['data'][0]['empcode'] + '</td><td>' + data['data'][0]['firstname'] + ' ' + data['data'][0]['lastname'] + '</td><td>' + inputweight.value + '</td><td>0</td><td><button class="btn btn-secondary" onclick="PrintBarcode(' + r2.id + ');"> Edit</button></td>';
 					str += '</tr>';
 
-					$("#tbmain").prepend(str);
+					$("#TM_Table_Quantity").prepend(str);
 					const elmnt = document.querySelector("table tr:last-child");
 					elmnt.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
 					document.getElementById('txtresult').innerHTML = 'บันทึกข้อมูลรหัส ' + data['data'][0]['empcode'] + ' สำเร็จ '
