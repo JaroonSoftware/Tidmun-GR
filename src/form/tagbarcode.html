@@ -67,6 +67,8 @@
       <div style="text-align: center; border: 3px solid #000">
         <img src="../../assets/icons/logo_tidmun.jpg" width="100" />
         <svg class="mycss mybarcode"></svg>
+        <br />
+        <!-- <span id="barcode_stcode">100100</span> -->
       </div>
     </div>
 
@@ -94,7 +96,12 @@
         //   }
         // );
 
-        JsBarcode(".mybarcode", "8880020",{displayValue: false,width:2});
+        JsBarcode(".mybarcode", "8880020", {
+          displayValue: true,
+          width: 2,
+          flat: true,
+          text: accessToken.stcode,
+        });
         // alert(stcode);
         // JsBarcode("#barcode", stcode); // กรณีใช้ผ่าน id
         // กรณีใช้ผาน css class
