@@ -52,7 +52,7 @@ function createWindow() {
 
   function printBarcode(data) {
     const formbarcode = new BrowserWindow({
-      width: 400, height: 400, resizable: false, webPreferences: {
+      width: 400, height: 300, resizable: false, show: false , webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       }
@@ -62,7 +62,7 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: false,
+      silent: true,
       printBackground: true,
       color: true,
       margin: {
@@ -75,22 +75,19 @@ function createWindow() {
       header: 'Header of the Page',
       footer: 'Footer of the Page'
     }
+    // formbarcode.hide();
     formbarcode.webContents.on('did-finish-load', () => {
-      let accessToken = data;
-      formbarcode.webContents.send("send-barcode", accessToken);
-
-      ipc.on("print", (event, data) => {
-        accessToken = data;
-    
-        mainWindow.webContents.send("got-access-token", accessToken);
-        event.sender.send("ok", "Hello World!");
-      });
+      
+      formbarcode.webContents.send("send-barcode", data);
+      
 
       formbarcode.webContents.print(options, (success, failureReason) => {
         if (!success) console.log(failureReason);
 
         // console.log('Print Initiated');
       });
+
+
     })
   }
 

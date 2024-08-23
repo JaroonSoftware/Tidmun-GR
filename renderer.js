@@ -16,17 +16,17 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 	});
 
 	$.post("https://tidmunzbuffet.com/api_app/gr/getsup_grdetail.php", { grcode: grcode }, function (grdetail) {
-		console.log(grdetail);
+		// console.log(grdetail);
 		let result = JSON.parse(grdetail)
 		$('#TM_Table_Main tbody').empty();
 		$('#TM_Table_Quantity tbody').empty();
-		for (let i in result ) {
-			let count = parseInt(i,10)+1
+		for (let i in result) {
+			let count = parseInt(i, 10) + 1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' +'</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stname + '\',\'' + result[i].totalprice + '\',\'' + result[i].stcode + '\',\'' + result[i].qty + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\');">เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
-			
+
 		}
 	}).fail(function (error) {
 
@@ -37,129 +37,54 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 });
 
-function PrintBarcode(stcode, grcode) {
-	// alert(stcode)	
+function PrintBarcode(stcode, grcode,no) {
+	// alert(no)	
 	// alert($('#tx_unitweigt').val())
 
-	var jsonData = { "stcode": stcode, "grcode": grcode, "unit_weight": $('#tx_unitweigt').val() };
+	$.post(
+		"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
+		{
+			stcode: stcode,
+			grcode: grcode,
+			unit_weight: $('#tx_unitweigt').val(),
+			no: no,
+		},
+		function (r2) {
+			console.log(r2);
+			let response = JSON.parse(r2);
+			// console.log(response);
+			//   alert(response.barcode_id)
+			// ipc.send('message:Edit', data);
+			
+			ipc.send('message:printtags', response);
 
-	ipc.send('message:printtags', jsonData);
+			Show_Item(response.grcode,response.stcode);
 
-	// ipc.send('message:Edit', data);
+		}
+	).fail(function (error) {
 
-
-	// const electron = require('electron')
-	// // Importing BrowserWindow from Main 
-	// const BrowserWindow = electron.remote.BrowserWindow;
-
-	// // var current = document.getElementById('current');
-	// var options = {
-	// 	silent: false,
-	// 	printBackground: true,
-	// 	color: false,
-	// 	margin: {
-	// 		marginType: 'printableArea'
-	// 	},
-	// 	landscape: false,
-	// 	pagesPerSheet: 1,
-	// 	collate: false,
-	// 	copies: 1,
-	// 	header: 'Header of the Page',
-	// 	footer: 'Footer of the Page'
-	// }
-
-	// // alert('test')
-	// let win = BrowserWindow.getFocusedWindow();
-	// // let win = BrowserWindow.getAllWindows()[0]; 
-
-	// win.webContents.print(options, (success, failureReason) => {
-	// 	if (!success) console.log(failureReason);
-
-	// 	console.log('Print Initiated');
-	// });
+		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+	});
 }
 
-function Show_Item(grcode,supname,total_price,stcode,qty){
+function Show_Item(grcode, stcode) {
 
+	$.post("https://tidmunzbuffet.com/api_app/barcode/getsup_barcode.php", { grcode: grcode, stcode: stcode }, function (grdetail) {
+		// console.log(grdetail);
+		let result = JSON.parse(grdetail)
+		
 		$('#TM_Table_Quantity tbody').empty();
-		for (let i=0;i<qty;i++) {
+		for (let i in result) {
+
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + (i+1) + '.' +'</td><td>' + stcode  + '</td><td>' + supname + '</td><td  style="text-align: right;" >' + total_price + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + stcode + '\',\'' + grcode + '\');">Print</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td><td  style="text-align: center;" >' + result[i].barcode_status + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\');">Print</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Quantity");
-			
+
 		}
+	}).fail(function (error) {
+
+		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+	});
 
 }
-// ipcRenderer.on("get-token", (event) => {
-
-//   $('#tbmain tbody').empty();
-//   $.post(
-//     "https://tidmunzbuffet.com/api_app/weight_record/get_record.php",
-//     function (r) {
-//       let result = JSON.parse(r);
-
-//       for (let i in result) {
-//         tb = "";
-//         tb +=
-//           '<tr id="' +
-//           (i + 1) +
-//           '"><td>' +
-//           result[i].create_date +
-//           "</td><td>" +
-//           result[i].empcode +
-//           "</td><td>" +
-//           result[i].firstname +
-//           " " +
-//           result[i].lastname +
-//           "</td><td>" +
-//           result[i].unit_weight +
-//           "</td><td>" +
-//           result[i].shrimp_shell +
-//           '</td><td><button class="btn btn-secondary" onclick="EditWindow(' +
-//           result[i].id +
-//           ');"> Edit</button></td>';
-//         tb += "</tr>";
-//         $(tb).appendTo("#tbmain");
-//       }
-//       $("#tx_empcode").focus();
-//     }
-//   );
-// });
-
-// ipcRenderer.on("delete-token", (event) => {
-
-//   $('#tbmain tbody').empty();
-//   $.post(
-//     "https://tidmunzbuffet.com/api_app/weight_record/get_record.php",
-//     function (r) {
-//       let result = JSON.parse(r);
-
-//       for (let i in result) {
-//         tb = "";
-//         tb +=
-//           '<tr id="' +
-//           (i + 1) +
-//           '"><td>' +
-//           result[i].create_date +
-//           "</td><td>" +
-//           result[i].empcode +
-//           "</td><td>" +
-//           result[i].firstname +
-//           " " +
-//           result[i].lastname +
-//           "</td><td>" +
-//           result[i].unit_weight +
-//           "</td><td>" +
-//           result[i].shrimp_shell +
-//           '</td><td><button class="btn btn-secondary" onclick="EditWindow(' +
-//           result[i].id +
-//           ');"> Edit</button></td>';
-//         tb += "</tr>";
-//         $(tb).appendTo("#tbmain");
-//       }
-//       $("#tx_empcode").focus();
-//     }
-//   );
-// });
-
