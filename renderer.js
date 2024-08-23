@@ -20,9 +20,10 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 		let result = JSON.parse(grdetail)
 		$('#TM_Table_Main tbody').empty();
 		$('#TM_Table_Quantity tbody').empty();
-		for (let i in result) {
+		for (let i in result ) {
+			let count = parseInt(i,10)+1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td>' + result[i].qty + '</td><td>' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stname + '\',\'' + result[i].totalprice + '\',\'' + result[i].stcode + '\',\'' + result[i].qty + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' +'</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stname + '\',\'' + result[i].totalprice + '\',\'' + result[i].stcode + '\',\'' + result[i].qty + '\');">เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
 			
@@ -83,7 +84,7 @@ function Show_Item(grcode,supname,total_price,stcode,qty){
 		$('#TM_Table_Quantity tbody').empty();
 		for (let i=0;i<qty;i++) {
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td>' + grcode + '</td><td>' + supname + '</td><td>' + total_price + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + stcode + '\',\'' + grcode + '\');">Print</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + (i+1) + '.' +'</td><td>' + stcode  + '</td><td>' + supname + '</td><td  style="text-align: right;" >' + total_price + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + stcode + '\',\'' + grcode + '\');">Print</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Quantity");
 			
