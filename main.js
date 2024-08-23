@@ -52,7 +52,7 @@ function createWindow() {
 
   function printBarcode(data) {
     const formbarcode = new BrowserWindow({
-      width: 400, height: 400, resizable: true, webPreferences: {
+      width: 400, height: 400, resizable: false, webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       }
@@ -89,7 +89,7 @@ function createWindow() {
       formbarcode.webContents.print(options, (success, failureReason) => {
         if (!success) console.log(failureReason);
 
-        console.log('Print Initiated');
+        // console.log('Print Initiated');
       });
     })
   }

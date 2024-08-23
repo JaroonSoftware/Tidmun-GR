@@ -17,13 +17,18 @@
     />
     <link
       rel="stylesheet"
-      href="../../node_modules/@fortawesome/fontawesome-free/css/all.css"
+      href="../../node_modules/font-awesome/css/font-awesome.min.css"
     />
     <link
       rel="stylesheet"
       href="../../node_modules/sweetalert2/dist/sweetalert2.css"
     />
-
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <script>
+      getGoogleFontsUrlSimple("Sarabun, 300..800, 75..100, italic")
+      getGoogleFontsUrlSimple("Kanit, 300..900, 75..100, italic")
+    </script>
+    
     <!-- Insert this line above script imports  -->
     <script>
       if (typeof module === "object") {
@@ -49,25 +54,43 @@
     <!-- <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script> -->
   </head>
   <body>
-    <br />
-    <br />
     <style type="text/css">
+      body{
+        margin: 0px;
+        padding: 0px;
+      }
+      .fonttext{
+        font-family: "Sarabun", sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .fontkg{
+        font-family: "Kanit", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+      }
       .mycss {
         font-family: "C39HrP72DlTt";
         font-size: 12px;
-        font-weight: normal;
       }
       .bgimg {
         position: fixed;
       }
     </style>
-    <div style="width: 400; margin: auto">
+    <div style="width: 400; margin: 0px;padding: 0px;">
       <!-- <svg id="barcode"></svg>
       <br /> -->
-      <div style="text-align: center; border: 3px solid #000">
-        <img src="../../assets/icons/logo_tidmun.jpg" width="100" />
-        <svg class="mycss mybarcode"></svg>
+      <div style="text-align: center; border: 3px solid #000;padding-top: 10px;">
+        <span id="barcode_stname" class="fonttext" >หมูสามชั้น</span>
         <br />
+        <img src="../../assets/icons/logo_tidmun.jpg" width="100" />
+        <svg class="mycss mybarcode" ></svg>
+        <div style="margin:0 50px;">
+          <!-- <span id="barcode_stcode" class="fonttext" style="float: left;">1659</span> -->
+          <span class="fonttext">น้ำหนักสุทธิ</span><span id="barcode_unit_weight" class="fontkg" style="float: right;" >1.26 KG</span>
+        </div>
+        <br>
+        <br>
         <!-- <span id="barcode_stcode">100100</span> -->
       </div>
     </div>
@@ -97,10 +120,12 @@
         // );
 
         JsBarcode(".mybarcode", "8880020", {
-          displayValue: true,
+          displayValue: false,
           width: 2,
           flat: true,
-          text: accessToken.stcode,
+          // text: accessToken.stcode,
+          fontOptions: "bold",
+          textAlign: "left"
         });
         // alert(stcode);
         // JsBarcode("#barcode", stcode); // กรณีใช้ผ่าน id
