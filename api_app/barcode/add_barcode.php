@@ -7,16 +7,22 @@ date_default_timezone_set('Asia/Bangkok');
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // var_dump($_POST);     
 
-        $sql = "INSERT INTO items_barcode
-        (stcode,unit_weight, grcode, barcode_status, socode, dncode, created_date)
-        VALUES(:stcode,:unit_weight, :grcode, 'อยู่ในสต๊อก', NULL, NULL, current_timestamp())";
+                $sql = "INSERT INTO items_barcode
+                (stcode,unit_weight, grcode, barcode_status, socode, dncode, created_date)
+                VALUES(:stcode,:unit_weight, :grcode, 'อยู่ในสต๊อก', NULL, NULL, current_timestamp())";
 
-        $stmt = $conn->prepare($sql);
-        if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
+                $stmt = $conn->prepare($sql);
+                if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
 
-        $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);
-        $stmt->bindValue(":unit_weight", number_format($_POST['unit_weight'], 2), PDO::PARAM_STR);
-        $stmt->bindValue(":grcode", $_POST['grcode'], PDO::PARAM_STR);
+                $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);
+                $stmt->bindValue(":unit_weight", number_format($_POST['unit_weight'], 2), PDO::PARAM_STR);
+                $stmt->bindValue(":grcode", $_POST['grcode'], PDO::PARAM_STR);
+
+                if (!$stmt->execute()) {
+                    $error = $conn->errorInfo();
+                    throw new PDOException("Insert data error => $error");
+                    die;
+                }
 
                 $sql = "
                 update grbarcode 
