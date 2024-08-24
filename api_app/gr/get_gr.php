@@ -5,11 +5,14 @@ date_default_timezone_set('Asia/Bangkok');
 
 include '../conn.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
 
+    extract($_POST, EXTR_OVERWRITE, "_"); 
+    
     $grcode = !empty($grcode) ? "and a.grcode like '%$grcode%'" : "";
     $supcode = !empty($supcode) ? "and c.supcode like '%$supcode%'" : "";
     $supname = !empty($supname) ? "and c.supname like '%$supname%'" : "";
-    $created_by = !empty($created_by) ? "and ( u.firstname like '%$created_by%' or u.lastname like '%$created_by%' )" : "";
+    
     $grdate = "";
     $sql = " 
         select 
@@ -23,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $grcode
         $supcode
         $supname
-        $created_by
         $grdate
         order by a.created_date desc ;";
     $stmt = $conn->prepare($sql);
@@ -32,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     http_response_code(200);
     echo json_encode($data);
+    // echo json_encode(array('status' => '1', 'data' => $data, 'sql' => str_replace(' ', '', $sql)));
 } else {
     http_response_code(400);
     echo json_encode(array('status' => '0', 'message' => 'request method fail.'));

@@ -82,12 +82,14 @@
         <div class="row ">
             <h2>เลือกใบรับสินค้า</h2>
             <div>
-                <div class="row" style="padding-bottom: 3%;">
-                    <a>ค้นหา</a>
-                    <div class="col-4"><input class="form-control" placeholder="เลขที่ GR" id=""></input> </div>
-                    <div class="col-4"><input class="form-control" placeholder="ชื่อผู้ขาย" id=""></input></div>
-                    <div class="col-4"><input class="form-control" placeholder="ที่อยู่" id=""></input></div>
-                </div>
+                <form id="searchform">
+                    <div class="row" style="padding-bottom: 3%;">
+                        <a>ค้นหา</a>
+                        <div class="col-4"><input class="form-control" onchange="getData()" placeholder="เลขที่ GR" name="grcode"></input> </div>
+                        <div class="col-4"><input class="form-control" onchange="getData()" placeholder="ชื่อผู้ขาย" name="supname"></input></div>
+                        <div class="col-4"><input class="form-control" onchange="getData()" placeholder="รหัสผู้ขาย" name="supcode"></input></div>
+                    </div>
+                </form>
                 <div class="tableFixHead">
                     <table id="getgr">
                         <thead>
@@ -123,30 +125,37 @@
 </html>
 <script>
 
+    window.onload = getData;
+
     function selectGR(grcode) {
         // alert (grcode);
         const ipc = window.require("electron").ipcRenderer;
 
         ipc.send('notes', grcode)
-   
+
 
         window.close();
     }
 
-    $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", function (r) {
-        let result = JSON.parse(r)
+    function getData() {
+        // console.log($('#searchform').serialize())
+        $('#getgr tbody').empty();
 
-        for (let i in result) {
-            tb = '';
-            tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].created_name + '</td><td>'
-                + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>'; 
+        $.post("https://tidmunzbuffet.com/api_app/gr/get_gr.php", $('#searchform').serialize(), function (r) {
+            let result = JSON.parse(r)
+
+            for (let i in result) {
+                tb = '';
+                tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].created_name + '</td><td>'
+                    + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>';
                 $(tb).appendTo("#getgr");
-        }
+            }
 
-    }).fail(function (error) {
+        }).fail(function (error) {
 
-        $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-        document.getElementById('txtresult').style.color = "red";
-    });
+            $('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+            document.getElementById('txtresult').style.color = "red";
+        });
+    }
 
 </script>
