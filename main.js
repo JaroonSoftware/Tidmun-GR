@@ -20,7 +20,7 @@ function createWindow() {
     },
   });
 
-  function Select_PO() {
+  function Select_GR() {
     const child = new BrowserWindow({
       autoHideMenuBar: true,
       parent: mainWindow,
@@ -137,7 +137,7 @@ function createWindow() {
   });
 
   ipc.on("message:loginShow", () => {
-    Select_PO();
+    Select_GR();
   });
 
   ipc.on("message:loginShow2", () => {
@@ -153,7 +153,7 @@ function createWindow() {
     mainWindow.close();
   });
 
-  Select_PO();
+  Select_GR();
 
   mainWindow.loadFile("src/index.html");
   // mainWindow.setIcon("assets/icons/win/icon.ico");

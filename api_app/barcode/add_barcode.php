@@ -8,14 +8,15 @@ date_default_timezone_set('Asia/Bangkok');
         // var_dump($_POST);     
 
                 $sql = "INSERT INTO items_barcode
-                (stcode,unit_weight, grcode, barcode_status, socode, dncode, created_date)
-                VALUES(:stcode,:unit_weight, :grcode, 'อยู่ในสต๊อก', NULL, NULL, current_timestamp())";
+                (stcode,unit_weight,cost, grcode, barcode_status, socode, dncode, created_date)
+                VALUES(:stcode,:unit_weight,:cost, :grcode, 'อยู่ในสต๊อก', NULL, NULL, current_timestamp())";
 
                 $stmt = $conn->prepare($sql);
                 if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
 
                 $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);
                 $stmt->bindValue(":unit_weight", number_format($_POST['unit_weight'], 2), PDO::PARAM_STR);
+                $stmt->bindValue(":cost", number_format($_POST['cost'], 2), PDO::PARAM_STR);
                 $stmt->bindValue(":grcode", $_POST['grcode'], PDO::PARAM_STR);
 
                 if (!$stmt->execute()) {

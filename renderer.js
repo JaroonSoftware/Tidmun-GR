@@ -4,13 +4,13 @@ const ipc = require("electron").ipcRenderer;
 ipcRenderer.on("got-access-token", (event, accessToken) => {
 	//   data = accessToken.split(",");
 	let grcode = accessToken;
-
+	// console.log(accessToken)
 	$.post("https://tidmunzbuffet.com/api_app/gr/getsup_gr.php", { grcode: grcode }, function (grhead) {
 		// console.log(grhead);
 		let result = JSON.parse(grhead)
-		$('#showdata').val(grcode)
-		$('#showdata20').val(result[0].supcode)
-		$('#datedata').val(result[0].grdate)
+		$('#grcode').val(grcode)
+		$('#supcode').val(result[0].supcode)
+		$('#grdate').val(result[0].grdate)
 		$('#supname').val(result[0].supname)
 
 	});
@@ -23,7 +23,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 		for (let i in result) {
 			let count = parseInt(i, 10) + 1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\');">เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
 
@@ -37,47 +37,58 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 });
 
-function PrintBarcode(stcode, grcode,no) {
+function PrintBarcode(stcode, grcode, no,price) {
 	// alert(no)	
 	// alert($('#tx_unitweigt').val())
+	var inputweight = document.getElementById("tx_unitweigt");
+	if (inputweight.value > 0) {
+		$.post(
+			"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
+			{
+				stcode: stcode,
+				grcode: grcode,
+				unit_weight: $('#tx_unitweigt').val(),
+				no: no,
+				cost:price,
+			},
+			function (r2) {
+				// console.log(r2);
+				let response = JSON.parse(r2);
+				// console.log(response);
+				//   alert(response.barcode_id)
+				// ipc.send('message:Edit', data);
 
-	$.post(
-		"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
-		{
-			stcode: stcode,
-			grcode: grcode,
-			unit_weight: $('#tx_unitweigt').val(),
-			no: no,
-		},
-		function (r2) {
-			console.log(r2);
-			let response = JSON.parse(r2);
-			// console.log(response);
-			//   alert(response.barcode_id)
-			// ipc.send('message:Edit', data);
-			
-			ipc.send('message:printtags', response);
+				ipc.send('message:printtags', response);
 
-			Show_Item(response.grcode,response.stcode);
+				Show_Item(response.grcode, response.stcode);
 
-		}
-	).fail(function (error) {
+			}
+		).fail(function (error) {
 
-		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
-	});
+			$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+		});
+	} else {
+
+		document.getElementById('txtresult').innerHTML = 'กรุณาชั่งสินค้าก่อน ยิง Barcode'
+		document.getElementById('txtresult').style.color = "red";
+
+	}
+	inputempcode.value = null;
+	inputempcode.click();
+	event.preventDefault();
 }
 
-function Show_Item(grcode, stcode) {
+function Show_Item(grcode, stcode,price) {
 
 	$.post("https://tidmunzbuffet.com/api_app/barcode/getsup_barcode.php", { grcode: grcode, stcode: stcode }, function (grdetail) {
 		// console.log(grdetail);
 		let result = JSON.parse(grdetail)
-		
+
 		$('#TM_Table_Quantity tbody').empty();
 		for (let i in result) {
 
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td><td  style="text-align: center;" >' + result[i].barcode_status + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\');">Print</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td><td  style="text-align: center;" >' + result[i].barcode_status + '</td><td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');">Print</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Quantity");
 
