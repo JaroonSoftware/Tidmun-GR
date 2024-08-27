@@ -6,7 +6,8 @@
   <title>Tidmun-GR</title>
   <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="icon" href="./../assets/icons/win/icon.ico">
-  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+ 
+  <link rel="stylesheet" href="./../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
   <!-- Insert this line above script imports  -->
   <script>
     if (typeof module === 'object') { window.module = module; module = undefined; }
@@ -57,7 +58,7 @@
             <input class="form-control" id="supname" disabled></input>
           </div>
           <div class="col-md-3">
-            <label>วันที่<i class='fas fa-download'></i></label>
+            <label>วันที่</label>
             <input class="form-control" id="grdate" disabled></input>
           </div>
         </div>
@@ -65,21 +66,21 @@
         <br>
         <div class="row">
           <div class="col-md-12" style="padding-top: 5px;">
-              <button class="btn btn-secondary" onclick="Select_GR();">เลือกใบรับสินค้าใหม่</button>
-              <button class="btn btn-secondary" onclick="Show_Modal_Examine();">ตรวจสอบสินค้า</button>
+              <button class="btn btn-success" onclick="Select_GR();"> <i class='fas fa-paste'></i> เลือกใบรับสินค้าใหม่</button>
+              <button class="btn btn-success" onclick="Show_Modal_Examine();"> <i class='fas fa-check-circle'></i> ตรวจสอบสินค้า</button>
           </div>
         </div>
         <br>
         <div class="tableFixHead" style="overflow: hidden;">
-          <table id="TM_Table_Main">
-            <thead>
+          <table id="TM_Table_Main" class="table table-hover">
+            <thead style="background-color: #fccc2f;">
               <tr style="text-align: center;">
                 <th width="12%">รายการที่</th>
-                <th width="23%" >รหัสสินค้า</th>
+                <th width="20%" >รหัสสินค้า</th>
                 <th width="30%">ชื่อสินค้า</th>
                 <th width="5%">จำนวน</th>
                 <th width="15%">ราคา</th>
-                <th width="10%">เพิ่มเติม</th>
+                <th width="12%">เพิ่มเติม</th>
               </tr>
             </thead>
             <tbody style="background-color: #ffffff;padding: 0;">
@@ -92,15 +93,15 @@
       <br>
       <div class="col-md-6 ">
         <div class="tableFixHead" style="overflow: hidden;">
-          <table id="TM_Table_Quantity">
+          <table id="TM_Table_Quantity" class="table table-hover">
             <thead>
               <tr style="text-align: center;">
                 <th width="10%">ชิ้นที่</th>
-                <th width="10%">รหัสสินค้า</th>
-                <th width="35%">ชื่อสินค้า</th>
+                <th width="12%">รหัสสินค้า</th>
+                <th width="30%">ชื่อสินค้า</th>
                 <th width="10%">น้ำหนัก</th>
                 <th width="25%">สถานะ</th>
-                <th width="10%">เพิ่มเติม</th>
+                <th width="13%">เพิ่มเติม</th>
               </tr>
             </thead>
             <tbody style="background-color: #ffffff;padding: 0;">

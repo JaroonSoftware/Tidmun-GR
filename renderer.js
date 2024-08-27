@@ -24,7 +24,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 		for (let i in result) {
 			let count = parseInt(i, 10) + 1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-secondary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\');">เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: right">' + result[i].totalprice + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
 
@@ -96,7 +96,7 @@ function Show_Item(grcode, stcode,price) {
 				barcode_status  = '<td style="text-align: center;color : green;">'  + result[i].barcode_status + '</td>'
 			}
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>'+barcode_status+'<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');">Print</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>'+barcode_status+'<td><button class="btn btn-primary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>';
 			tb += '</tr>';
 			
 			
