@@ -35,7 +35,7 @@ var count = 0;
 
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
-const port = new SerialPort({ path: 'COM1', baudRate: 9600 }, function (err) {
+const port = new SerialPort({ path: 'COM3', baudRate: 9600 }, function (err) {
 	if (err) {
 		document.getElementById('txtresult').innerHTML = 'เชื่อมต่อเครื่องชั่งน้ำหนักไม่สำเร็จ'
 		document.getElementById('txtresult').style.color = "red";

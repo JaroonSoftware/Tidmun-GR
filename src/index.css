@@ -23,8 +23,10 @@ input::-webkit-inner-spin-button {
 table {
   border-collapse: collapse;
   width: 100%;
+  
 }
-
+.button:hover {opacity: 1}
+tr:hover {background-color: rgb(231, 231, 230);}
 th,
 td {
   padding: 8px 16px;
@@ -32,7 +34,7 @@ td {
 }
 
 th {
-  background: #e4b355;
+  background: #fcbe4b;
 }
 
 body,

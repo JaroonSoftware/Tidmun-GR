@@ -88,15 +88,19 @@ function Show_Item(grcode, stcode,price) {
 		$('#TM_Table_Quantity tbody').empty();
 		for (let i in result) {
 			let barcode_status
+			let button_printf
 			if(result[i].barcode_status === "ยังไม่ออก barcode"){
 				barcode_status = '<td style="text-align: center;color : red;">'  + result[i].barcode_status + '</td>'
+				button_printf = '<td><button class="btn btn-success" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>'
 				}
 				else
 				{
 				barcode_status  = '<td style="text-align: center;color : green;">'  + result[i].barcode_status + '</td>'
+				button_printf = '<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>'
+
 			}
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>'+barcode_status+'<td><button class="btn btn-primary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>'+barcode_status+ button_printf;
 			tb += '</tr>';
 			
 			
