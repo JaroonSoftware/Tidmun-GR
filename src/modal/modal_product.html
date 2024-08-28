@@ -97,7 +97,7 @@
                                 <th>เลขที่ใบรับสินค้า</th>
                                 <th>ชื่อผู้ขาย</th>
                                 <th>ที่อยู่</th>
-                                <th>เลือก</th>
+                                <th style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody style="background-color: #ffffff;">
@@ -147,7 +147,7 @@
             for (let i in result) {
                 tb = '';
                 tb += '<tr id="' + (i + 1) + '"><td>' + result[i].grcode + '</td><td>' + result[i].supname + '</td><td>'
-                    + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td>' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>';
+                    + result[i].district + ' ' + result[i].subdistrict + ' ' + result[i].province + '</td><td style="text-align: center;">' + '<button class="btn btn-primary btn-lg" onclick="selectGR(\'' + result[i].grcode + '\')" >เลือก</button>' + '</td>'; tb += '</tr>';
                 $(tb).appendTo("#getgr");
             }
 

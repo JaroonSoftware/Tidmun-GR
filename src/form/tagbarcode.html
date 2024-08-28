@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>JsBarcode</title>
+    <title></title>
     <!-- <link
       rel="stylesheet"
       href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css"
@@ -84,7 +84,7 @@
       <!-- <svg id="barcode"></svg>
       <br /> -->
       <div
-        style="text-align: center; border: 3px solid #000; padding-top: 10px"
+        style="text-align: center; border: 3px solid #000; padding-top: 5px"
       >
         <span id="barcode_stname" class="fonttext">หมูสามชั้น</span>
         <br />
@@ -94,10 +94,9 @@
           <!-- <span id="barcode_stcode" class="fonttext" style="float: left;">1659</span> -->
           <span class="fonttext">น้ำหนักสุทธิ</span
           ><span id="barcode_unit_weight" class="fontkg" style="float: right"
-            >1.26 KG</span
+            > KG</span
           >
         </div>
-        <br />
         <br />
         <!-- <span id="barcode_stcode">100100</span> -->
       </div>
@@ -108,7 +107,8 @@
 
       ipcRenderer.on("send-barcode", (event, accessToken) => {
         // const stcode = accessToken;
-        // alert(accessToken.barcode_id);
+        // alert(accessToken.unit_weight);
+        $('#barcode_unit_weight').text(accessToken.unit_weight+' KG')
         JsBarcode(".mybarcode", accessToken.barcode_id, {
               displayValue: false,
               width: 3,
