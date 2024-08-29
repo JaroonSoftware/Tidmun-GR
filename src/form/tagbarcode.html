@@ -95,7 +95,7 @@
           <span class="fonttext">น้ำหนักสุทธิ</span
           ><span id="barcode_unit_weight" class="fontkg" style="float: right"
             > KG</span
-          >
+          >          
         </div>
         <br />
         <!-- <span id="barcode_stcode">100100</span> -->
@@ -107,8 +107,10 @@
 
       ipcRenderer.on("send-barcode", (event, accessToken) => {
         // const stcode = accessToken;
-        // alert(accessToken.unit_weight);
+        // alert(accessToken.barcode_id);
         $('#barcode_unit_weight').text(accessToken.unit_weight+' KG')
+        $('#barcode_stname').text(accessToken.stname)
+        
         JsBarcode(".mybarcode", accessToken.barcode_id, {
               displayValue: false,
               width: 3,
