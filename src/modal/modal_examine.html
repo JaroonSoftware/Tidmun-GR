@@ -121,7 +121,7 @@
           </div>
           <div class="col-md-4">
             <label>สถานะ</label>
-            <input class="form-control" id="" readonly></input>
+            <input class="form-control" id="barcode_status" readonly></input>
           </div>
         </div>
         <div class="row" style="padding-top: 2%;">
@@ -172,6 +172,7 @@
         $('#supname').val(result.supname)
         $('#cuscode').val(result.cuscode)
         $('#cusname').val(result.cusname)
+        $('#barcode_status').val(result.barcode_status)
       })
       inputempcode.value = null;
 

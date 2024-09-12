@@ -38,7 +38,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 
 });
 
-function PrintBarcode(stcode, grcode, no,price) {
+function PrintBarcode(stcode, grcode, no,price,stname) {
 	// alert(no)	
 	// alert($('#tx_unitweigt').val())
 	var inputweight = document.getElementById("tx_unitweigt");
@@ -47,6 +47,7 @@ function PrintBarcode(stcode, grcode, no,price) {
 			"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
 			{
 				stcode: stcode,
+				stname: stname,
 				grcode: grcode,
 				unit_weight: $('#tx_unitweigt').val(),
 				no: no,
@@ -74,8 +75,8 @@ function PrintBarcode(stcode, grcode, no,price) {
 		document.getElementById('txtresult').style.color = "red";
 
 	}
-	inputempcode.value = null;
-	inputempcode.click();
+	// inputempcode.value = null;
+	// inputempcode.click();
 	event.preventDefault();
 }
 
@@ -91,12 +92,12 @@ function Show_Item(grcode, stcode,price) {
 			let button_printf
 			if(result[i].barcode_status === "ยังไม่ออก barcode"){
 				barcode_status = '<td style="text-align: center;color : red;">'  + result[i].barcode_status + '</td>'
-				button_printf = '<td><button class="btn btn-success" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>'
+				button_printf = '<td><button class="btn btn-success" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\',\'' + result[i].stname + '\');"><i class="fa fa-print"></i> Print</button></td>'
 				}
 				else
 				{
 				barcode_status  = '<td style="text-align: center;color : secondary;">'  + result[i].barcode_status + '</td>'
-				button_printf = '<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>'
+				button_printf = '<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\',\'' + result[i].stname + '\');"><i class="fa fa-print"></i> Print</button></td>'
 
 			}
 			tb = '';
