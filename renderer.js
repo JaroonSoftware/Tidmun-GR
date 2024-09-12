@@ -95,7 +95,7 @@ function Show_Item(grcode, stcode,price) {
 				}
 				else
 				{
-				barcode_status  = '<td style="text-align: center;color : green;">'  + result[i].barcode_status + '</td>'
+				barcode_status  = '<td style="text-align: center;color : secondary;">'  + result[i].barcode_status + '</td>'
 				button_printf = '<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\');"><i class="fa fa-print"></i> Print</button></td>'
 
 			}

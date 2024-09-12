@@ -54,7 +54,7 @@ function createWindow() {
 
   function printBarcode(data) {
     const formbarcode = new BrowserWindow({
-      width: 400, height: 300, resizable: false, show: false , webPreferences: {
+      width: 400, height: 250, resizable: false, show: false , webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       }
@@ -64,7 +64,7 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: true,
+      silent: false,
       printBackground: true,
       color: true,
       margin: {
