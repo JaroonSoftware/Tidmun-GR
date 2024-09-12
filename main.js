@@ -22,6 +22,7 @@ function createWindow() {
 
   function Select_GR() {
     const child = new BrowserWindow({
+      icon: path.join(__dirname, "/assets/icons/win/icon.ico"),
       autoHideMenuBar: true,
       parent: mainWindow,
       height: 1000,
@@ -36,6 +37,7 @@ function createWindow() {
   }
   function Show_Modal_Examine() {
     const child = new BrowserWindow({
+      icon: path.join(__dirname, "/assets/icons/win/icon.ico"),
       autoHideMenuBar: true,
       parent: mainWindow,
       height: 700,
