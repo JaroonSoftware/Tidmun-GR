@@ -26,7 +26,7 @@
     <a class="navbar-brand" href="#">
 
       <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top"
-          alt="">Product weight system</h3>
+          alt=""> ระบบพิมพ์บาร์โค้ด</h3>
     </a>
 
   </nav>
@@ -38,7 +38,11 @@
           <input type="text" id="tx_unitweigt" class="form-control-lg"
             style="width: 100%;height:220px;font-size: 135px;text-align: right;color: #fb2a2a;border-color: #0f0e0e;background-color: #0f0e0e;"
             value="0.00" />
+          <input type="text" id="tx_noweight" class="form-control-lg"
+            style="display:none;width:100%;height:220px;font-size: 135px;text-align: right;color: #2afb5e;border-color: #0f0e0e;background-color: #0f0e0e;"
+            value="ไม่ต้องชั่งสินค้า" />            
         </div>
+        <input type="hidden" id="weight_stable">
         <br>
         <div class="col-md-12">
           <h3 id="txtresult" style="color: #4DBE05;padding: 0;font-weight: bold;">พร้อมใช้งาน</h3>
@@ -79,7 +83,6 @@
                 <th width="20%" >รหัสสินค้า</th>
                 <th width="30%">ชื่อสินค้า</th>
                 <th width="5%">จำนวน</th>
-                <th width="15%">ราคา</th>
                 <th width="12%">เพิ่มเติม</th>
               </tr>
             </thead>
