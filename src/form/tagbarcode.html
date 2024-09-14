@@ -60,18 +60,18 @@
     <style type="text/css">
       body {
         margin: 0px;
-        padding: 0px;
+        padding: 0 35px;
       }
       .fonttext {
         font-family: "Sarabun", sans-serif;
-        font-size: 24px;
-        font-weight: 800;
+        font-size: 20px;
+        font-weight: 600;
       }
-      .fontkg {
+      /* .fontkg {
         font-family: "Kanit", sans-serif;
         font-size: 24px;
-        font-weight: 700;
-      }
+        font-weight: 600;
+      } */
       .mycss {
         font-family: "C39HrP72DlTt";
         font-size: 12px;
@@ -80,26 +80,28 @@
         position: fixed;
       }
     </style>
-    <div style="width: 400; margin: 0px; padding: 0px">
-      <!-- <svg id="barcode"></svg>
+    <!-- <svg id="barcode"></svg>
       <br /> -->
-      <div
-        style="text-align: center; border: 3px solid #000; padding-top: 5px"
-      >
-        <span id="barcode_stname" class="fonttext">หมูสามชั้น</span>
-        <br />
-        <img src="../../assets/icons/logo_tidmun.jpg" width="100" />
-        <svg class="mycss mybarcode"></svg>
-        <div style="margin: 0 50px">
-          <!-- <span id="barcode_stcode" class="fonttext" style="float: left;">1659</span> -->
-          <span class="fonttext">น้ำหนักสุทธิ</span
-          ><span id="barcode_unit_weight" class="fontkg" style="float: right"
-            > KG</span
-          >          
+    <div style="text-align: center; border: 0px solid #000">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
         </div>
-        <br />
-        <!-- <span id="barcode_stcode">100100</span> -->
+
+        <!-- <span class="fonttext">น้ำหนักสุทธิ</span> -->
+        <div class="col">
+          <span id="barcode_unit_weight" class="fonttext" style="float: right;margin-right:30px">
+            KG
+          </span>
+        </div>
       </div>
+      <img src="../../assets/icons/logo_tidmun.jpg" width="150" />
+      <svg class="mycss mybarcode"></svg>
+      <div style="margin: 0 50px">
+        <!-- <span id="barcode_stcode" class="fonttext" style="float: left;">1659</span> -->
+      </div>
+      <br />
+      <!-- <span id="barcode_stcode">100100</span> -->
     </div>
 
     <script type="text/javascript">
@@ -108,18 +110,18 @@
       ipcRenderer.on("send-barcode", (event, accessToken) => {
         // const stcode = accessToken;
         // alert(accessToken.barcode_id);
-        $('#barcode_unit_weight').text(accessToken.unit_weight+' KG')
-        $('#barcode_stname').text(accessToken.stname)
-        
+        $("#barcode_unit_weight").text(accessToken.unit_weight + " KG");
+        $("#barcode_stname").text(accessToken.stname);
+
         JsBarcode(".mybarcode", accessToken.barcode_id, {
-              displayValue: false,
-              width: 3,
-              flat: true,
-              // text: accessToken.stcode,
-              fontOptions: "bold",
-              textAlign: "left",
-            });
-        
+          displayValue: true,
+          width: 3,
+          flat: true,
+          text: accessToken.stcode,
+          fontOptions: "bold",
+          textAlign: "center",
+        });
+
         // $.post(
         //   "https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
         //   {
@@ -146,7 +148,6 @@
         //     });
         //   }
         // );
-        
       });
     </script>
   </body>

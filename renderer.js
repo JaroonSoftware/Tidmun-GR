@@ -24,7 +24,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 		for (let i in result) {
 			let count = parseInt(i, 10) + 1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\',\'' + result[i].weight_stable + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\',\'' + result[i].weight_stable + '\',\'' + result[i].fixed_weight + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
 
@@ -43,7 +43,7 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 	// alert($('#tx_unitweigt').val())
 	var inputweight = document.getElementById("tx_unitweigt");
 
-	if (weight_stable !== 'Y') {
+	if ($('#weight_stable').val() !== 'Y') {
 
 		if (inputweight.value > 0) {
 			$.post(
@@ -65,8 +65,7 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 
 					ipc.send('message:printtags', response);
 
-					Show_Item(response.grcode, response.stcode);
-
+					Show_Item(response.grcode, response.stcode,price,$('#weight_stable').val(),$('#fixed_weight').val());
 				}
 			).fail(function (error) {
 
@@ -81,17 +80,43 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 	}
 	else
 	{
-		alert('test')
+		$.post(
+			"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
+			{
+				stcode: stcode,
+				stname: stname,
+				grcode: grcode,
+				unit_weight: $('#fixed_weight').val(),
+				no: no,
+				cost: price,
+			},
+			function (r2) {
+				// console.log(r2);
+				let response = JSON.parse(r2);
+				// console.log(response);
+				//   alert(response.barcode_id)
+				// ipc.send('message:Edit', data);
+
+				ipc.send('message:printtags', response);
+
+				Show_Item(response.grcode, response.stcode,price,$('#weight_stable').val(),$('#fixed_weight').val());
+
+			}
+		).fail(function (error) {
+
+			$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+		});
 	}
 	// inputempcode.value = null;
 	// inputempcode.click();
-	event.preventDefault();
+	// event.preventDefault();
 }
 
-function Show_Item(grcode, stcode, price, weight_stable) {
+function Show_Item(grcode, stcode, price, weight_stable,fixed_weight) {
 
 	$('#weight_stable').val(weight_stable);
-
+	$('#fixed_weight').val(fixed_weight);
+	
 	$.post("https://tidmunzbuffet.com/api_app/barcode/getsup_barcode.php", { grcode: grcode, stcode: stcode }, function (grdetail) {
 		// console.log(grdetail);
 		let result = JSON.parse(grdetail)

@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 include '../conn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$sql = "SELECT b.grcode,b.stcode,i.stname,b.qty,b.price,b.unit,ROUND(b.qty*b.price,2) as totalprice,i.weight_stable FROM `grmaster` as a INNER JOIN grdetail as b on a.grcode= b.grcode left join items as i on b.stcode = i.stcode ";
+$sql = "SELECT b.grcode,b.stcode,i.stname,b.qty,b.price,b.unit,ROUND(b.qty*b.price,2) as totalprice,i.weight_stable,i.weight as fixed_weight FROM `grmaster` as a INNER JOIN grdetail as b on a.grcode= b.grcode left join items as i on b.stcode = i.stcode ";
 $sql .= " where a.grcode = '" . $_POST['grcode'] . "' ";
 // echo $sql;
 $stmt = $conn->prepare($sql);

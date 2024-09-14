@@ -11,7 +11,7 @@ function createWindow() {
     width: 1360,
     height: 1024,
     modal: true,
-    fullscreen: true,
+    // fullscreen: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
@@ -54,7 +54,11 @@ function createWindow() {
 
   function printBarcode(data) {
     const formbarcode = new BrowserWindow({
-      width: 400, height: 250, resizable: false, show: false , webPreferences: {
+      width: 350,
+      height: 200,
+      resizable: false,
+      show: false,
+      webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
       }
@@ -64,24 +68,22 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: false,
-      printBackground: true,
-      color: true,
-      margin: {
-        marginType: 'printableArea'
+      silent: true,
+      // deviceName: "Microsoft Print to PDF",
+      margins: {
+        marginType: "none"
       },
-      landscape: true,
-      pagesPerSheet: 1,
-      collate: false,
-      copies: 1,
-      header: 'Header of the Page',
-      footer: 'Footer of the Page'
+      landscape: false,
+      dpi: {
+        horizontal: 250,
+        vertical: 400
+      },
     }
     // formbarcode.hide();
     formbarcode.webContents.on('did-finish-load', () => {
-      
+
       formbarcode.webContents.send("send-barcode", data);
-      
+
 
       formbarcode.webContents.print(options, (success, failureReason) => {
         if (!success) console.log(failureReason);
@@ -158,6 +160,7 @@ function createWindow() {
   Select_GR();
 
   mainWindow.loadFile("src/index.html");
+  mainWindow.maximize();
   // mainWindow.setIcon("assets/icons/win/icon.ico");
 }
 
