@@ -85,7 +85,7 @@
     <div style="text-align: center; border: 0px solid #000">
       <div class="row justify-content-md-center">
         <div class="col">
-          <span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
+          <span id="barcode_no"></span><span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
         </div>
 
         <!-- <span class="fonttext">น้ำหนักสุทธิ</span> -->
@@ -95,11 +95,8 @@
           </span>
         </div>
       </div>
-      <img src="../../assets/icons/logo_tidmun.jpg" width="150" />
+      <img src="../../assets/icons/logo_tidmun.jpg" width="140" />
       <svg class="mycss mybarcode"></svg>
-      <div style="margin: 0 50px">
-        <!-- <span id="barcode_stcode" class="fonttext" style="float: left;">1659</span> -->
-      </div>
       <br />
       <!-- <span id="barcode_stcode">100100</span> -->
     </div>
@@ -112,10 +109,11 @@
         // alert(accessToken.barcode_id);
         $("#barcode_unit_weight").text(accessToken.unit_weight + " KG");
         $("#barcode_stname").text(accessToken.stname);
-
+        $("#barcode_no").text(accessToken.no+". ");
+        
         JsBarcode(".mybarcode", accessToken.barcode_id, {
           displayValue: true,
-          width: 3,
+          width: 2,
           flat: true,
           text: accessToken.stcode,
           fontOptions: "bold",

@@ -78,7 +78,7 @@ date_default_timezone_set('Asia/Bangkok');
         // $conn->commit();
         if ($stmt->execute()) {
             http_response_code(200);
-            $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $barcode_id, 'stcode' => $_POST['stcode'], 'stname' => $_POST['stname'], 'grcode' => $_POST['grcode'],'unit_weight'=> number_format($_POST['unit_weight'], 2)];
+            $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $barcode_id, 'stcode' => $_POST['stcode'], 'stname' => $_POST['stname'], 'grcode' => $_POST['grcode'],'unit_weight'=> number_format($_POST['unit_weight'], 2),'no' => $_POST['no']];
         } else {
             $response = ['status' => 0, 'message' => 'Error! ติดต่อโปรแกรมเมอร์'];
         }
