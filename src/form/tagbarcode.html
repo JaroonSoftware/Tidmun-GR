@@ -27,10 +27,10 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
       rel="stylesheet"
     />
-    <script>
+    <!-- <script>
       getGoogleFontsUrlSimple("Sarabun, 300..800, 75..100, italic");
       getGoogleFontsUrlSimple("Kanit, 300..900, 75..100, italic");
-    </script>
+    </script> -->
 
     <!-- Insert this line above script imports  -->
     <script>
@@ -58,6 +58,14 @@
   </head>
   <body>
     <style type="text/css">
+      @page {
+        size: 50mm 50mm;
+        margin: 0 ; 
+        padding: 0 ;
+        overflow: hidden;
+        size: landscape
+        /* change the margins as you want them to be. */
+      }
       body {
         margin: 0px;
         padding: 0 35px;
@@ -82,7 +90,7 @@
     </style>
     <!-- <svg id="barcode"></svg>
       <br /> -->
-    <div style="text-align: center; border: 0px solid #000">
+    <div style="text-align: center; border: 0px solid #000;width:100%">
       <div class="row justify-content-md-center">
         <div class="col">
           <span id="barcode_no"></span><span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
@@ -95,7 +103,7 @@
           </span>
         </div>
       </div>
-      <img src="../../assets/icons/logo_tidmun.jpg" width="140" />
+      <img src="../../assets/icons/logo_tidmun.jpg" width="100" />
       <svg class="mycss mybarcode"></svg>
       <br />
       <!-- <span id="barcode_stcode">100100</span> -->
