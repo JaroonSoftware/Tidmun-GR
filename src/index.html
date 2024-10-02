@@ -6,7 +6,7 @@
   <title>Tidmun-GR</title>
   <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="icon" href="./../assets/icons/win/icon.ico">
- 
+
   <link rel="stylesheet" href="./../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
   <!-- Insert this line above script imports  -->
   <script>
@@ -25,8 +25,8 @@
   <nav class="navbar navbar-dark bg-dark justify-content-center">
     <a class="navbar-brand" href="#">
 
-      <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top"
-          alt=""> ระบบพิมพ์บาร์โค้ด</h3>
+      <h3> <img src="./../assets/icons/logo_tm.png" width="50" height="40" class="d-inline-block align-top" alt="">
+        ระบบพิมพ์บาร์โค้ด</h3>
     </a>
 
   </nav>
@@ -40,10 +40,10 @@
             value="0.00" />
           <input type="text" id="tx_noweight" class="form-control-lg"
             style="display:none;width:100%;height:220px;font-size: 135px;text-align: right;color: #2afb5e;border-color: #0f0e0e;background-color: #0f0e0e;"
-            value="ไม่ต้องชั่งสินค้า" />            
+            value="ไม่ต้องชั่งสินค้า" />
         </div>
         <input type="hidden" id="weight_stable">
-        <input type="hidden" id="fixed_weight">        
+        <input type="hidden" id="fixed_weight">
         <br>
         <div class="col-md-12">
           <h3 id="txtresult" style="color: #4DBE05;padding: 0;font-weight: bold;">พร้อมใช้งาน</h3>
@@ -71,8 +71,10 @@
         <br>
         <div class="row">
           <div class="col-md-12" style="padding-top: 5px;">
-              <button class="btn btn-primary" onclick="Select_GR();"> <i class='fas fa-paste'></i> เลือกใบรับสินค้าใหม่</button>
-              <button class="btn btn-secondary " onclick="Show_Modal_Examine();"> <i class='fas fa-check-circle'></i> ตรวจสอบสินค้า</button>
+            <button class="btn btn-primary" onclick="Select_GR();"> <i class='fas fa-paste'></i>
+              เลือกใบรับสินค้าใหม่</button>
+            <button class="btn btn-secondary " onclick="Show_Modal_Examine();"> <i class='fas fa-check-circle'></i>
+              ตรวจสอบสินค้า</button>
           </div>
         </div>
         <br>
@@ -80,10 +82,12 @@
           <table id="TM_Table_Main">
             <thead>
               <tr style="text-align: center;">
-                <th width="12%">รายการที่</th>
-                <th width="20%" >รหัสสินค้า</th>
+                <th width="9%">ลำดับที่</th>
+                <th width="10%">รหัสสินค้า</th>
                 <th width="30%">ชื่อสินค้า</th>
-                <th width="5%">จำนวน</th>
+                <th>จำนวนที่สั่ง</th>
+                <th>น้ำหนักชั่งแล้ว</th>
+                <th>หน่วย</th>
                 <th width="12%">เพิ่มเติม</th>
               </tr>
             </thead>
@@ -116,6 +120,8 @@
       </div>
     </div>
   </div>
+  <br>
+  <br>
   <footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
     <div class="text-center p-2 " style="background-color: rgba(0, 0, 0, 0.05);">
       © 2024 Copyright:
@@ -140,4 +146,3 @@
 </body>
 
 </html>
-

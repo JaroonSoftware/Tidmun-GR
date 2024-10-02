@@ -218,9 +218,9 @@ function createWindow() {
   });
 
   electronLocalshortcut.register(mainWindow, "Escape", () => {
-    app.quit();
     mainWindow.close();
-    
+    app.quit();
+
   });
 
   Select_GR();
@@ -239,5 +239,12 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", function () {
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== "darwin") { app.quit();  }
+});
+
+app.on('will-quit', function () {
+  // This is a good place to add tests insuring the app is still
+  // responsive and all windows are closed.
+  // console.log("will-quit");
+  mainWindow = null;
 });

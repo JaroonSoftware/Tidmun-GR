@@ -24,7 +24,7 @@ ipcRenderer.on("got-access-token", (event, accessToken) => {
 		for (let i in result) {
 			let count = parseInt(i, 10) + 1
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\',\'' + result[i].weight_stable + '\',\'' + result[i].fixed_weight + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: center">' + result[i].totalweight + '</td><td style="text-align: center">' + result[i].unit + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\',\'' + result[i].weight_stable + '\',\'' + result[i].fixed_weight + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
 			tb += '</tr>';
 			$(tb).appendTo("#TM_Table_Main");
 
@@ -107,6 +107,25 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 			$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
 		});
 	}
+
+	$.post("https://tidmunzbuffet.com/api_app/gr/getsup_grdetail.php", { grcode: grcode }, function (grdetail) {
+		// console.log(grdetail);
+		let result = JSON.parse(grdetail)
+		$('#TM_Table_Main tbody').empty();
+		// $('#TM_Table_Quantity tbody').empty();
+
+		for (let i in result) {
+			let count = parseInt(i, 10) + 1
+			tb = '';
+			tb += '<tr id="' + (i + 1) + '"><td style="text-align: center">' + count + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td style="text-align: center">' + result[i].qty + '</td><td style="text-align: center">' + result[i].totalweight + '</td><td style="text-align: center">' + result[i].unit + '</td><td><button class="btn btn-primary" onclick="Show_Item(\'' + result[i].grcode + '\',\'' + result[i].stcode + '\',\'' + result[i].price + '\',\'' + result[i].weight_stable + '\',\'' + result[i].fixed_weight + '\');"><i class="fas fa-sign-in-alt"></i> เลือก</button></td>';
+			tb += '</tr>';
+			$(tb).appendTo("#TM_Table_Main");
+
+		}
+	}).fail(function (error) {
+
+		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+	});
 	// inputempcode.value = null;
 	// inputempcode.click();
 	// event.preventDefault();
