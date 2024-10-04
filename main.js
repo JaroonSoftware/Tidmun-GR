@@ -58,7 +58,7 @@ function createWindow() {
       width: 350,
       height: 200,
       resizable: false,
-      show: false,
+      show: true,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -69,7 +69,7 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: true,
+      silent: false,
       // deviceName: "Microsoft Print to PDF",
       deviceName: 'HPRT HT300 - ZPL',
       margins: {

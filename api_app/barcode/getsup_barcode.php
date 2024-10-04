@@ -6,7 +6,7 @@ include '../conn.php';
 
 // echo $_POST['barcode_id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sql = "SELECT a.no, a.stcode,i.stname , a.grcode,a.unit_weight, a.barcode_status
+    $sql = "SELECT a.no, a.stcode,i.stname , a.grcode,a.unit_weight, a.barcode_status ,a.barcode_id
     FROM tidmunzb_db.grbarcode a 
     left outer join items i on (a.stcode=i.stcode)
     -- left outer join grdetail d on (a.grcode=d.grcode) and (a.stcode)

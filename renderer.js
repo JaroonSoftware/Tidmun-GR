@@ -65,7 +65,7 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 
 					ipc.send('message:printtags', response);
 
-					Show_Item(response.grcode, response.stcode,price,$('#weight_stable').val(),$('#fixed_weight').val());
+					Show_Item(response.grcode, response.stcode, price, $('#weight_stable').val(), $('#fixed_weight').val());
 				}
 			).fail(function (error) {
 
@@ -78,8 +78,7 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 
 		}
 	}
-	else
-	{
+	else {
 		$.post(
 			"https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
 			{
@@ -99,7 +98,7 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 
 				ipc.send('message:printtags', response);
 
-				Show_Item(response.grcode, response.stcode,price,$('#weight_stable').val(),$('#fixed_weight').val());
+				Show_Item(response.grcode, response.stcode, price, $('#weight_stable').val(), $('#fixed_weight').val());
 
 			}
 		).fail(function (error) {
@@ -112,7 +111,6 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 		// console.log(grdetail);
 		let result = JSON.parse(grdetail)
 		$('#TM_Table_Main tbody').empty();
-		// $('#TM_Table_Quantity tbody').empty();
 
 		for (let i in result) {
 			let count = parseInt(i, 10) + 1
@@ -131,25 +129,46 @@ function PrintBarcode(stcode, grcode, no, price, stname) {
 	// event.preventDefault();
 }
 
-function Show_Item(grcode, stcode, price, weight_stable,fixed_weight) {
+function RePrintBarcode(barcode_id, no) {
+	
+	$.post("https://tidmunzbuffet.com/api_app/barcode/reprint_barcode.php", { barcode_id: barcode_id,no:no }, function (grdetail) {
+		// console.log(grdetail);
+		let result = JSON.parse(grdetail)
+
+		ipc.send('message:printtags', result);
+	}).fail(function (error) {
+
+		$('#txtresult').text('อินเตอร์เน็ตมีปัญหา เชื่อมต่อไม่ได้')
+	});
+	// alert($('#tx_unitweigt').val())
+
+	
+}
+
+function Show_Item(grcode, stcode, price, weight_stable, fixed_weight) {
 
 	$('#weight_stable').val(weight_stable);
 	$('#fixed_weight').val(fixed_weight);
-	
+
 	$.post("https://tidmunzbuffet.com/api_app/barcode/getsup_barcode.php", { grcode: grcode, stcode: stcode }, function (grdetail) {
 		// console.log(grdetail);
 		let result = JSON.parse(grdetail)
 
 		if (weight_stable == 'Y') {
+			$('#TM_Table_NO_WEIGHT tbody').empty();
 			$('#tx_noweight').show();
 			$('#tx_unitweigt').hide();
+			$('#TM_Table_NO_WEIGHT').show();
+			$('#TM_Table_Quantity').hide();
 		}
 		else {
+			$('#TM_Table_Quantity tbody').empty();
 			$('#tx_noweight').hide();
 			$('#tx_unitweigt').show();
+			$('#TM_Table_Quantity').show();
+			$('#TM_Table_NO_WEIGHT').hide();
 		}
 
-		$('#TM_Table_Quantity tbody').empty();
 		for (let i in result) {
 			let barcode_status
 			let button_printf
@@ -159,18 +178,22 @@ function Show_Item(grcode, stcode, price, weight_stable,fixed_weight) {
 			}
 			else {
 				barcode_status = '<td style="text-align: center;color : secondary;">' + result[i].barcode_status + '</td>'
-				button_printf = '<td><button class="btn btn-secondary" onclick="PrintBarcode(\'' + result[i].stcode + '\',\'' + result[i].grcode + '\',\'' + result[i].no + '\',\'' + price + '\',\'' + result[i].stname + '\');"><i class="fa fa-print"></i> Print</button></td>'
+				button_printf = '<td><button class="btn btn-secondary" onclick="RePrintBarcode(\'' + result[i].barcode_id + '\',\'' + result[i].no + '\');"><i class="fa fa-print"></i> Print</button></td>'
 
 			}
 			tb = '';
-			tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>' + barcode_status + button_printf;
-			tb += '</tr>';
+			if (weight_stable == 'Y') {
+				tb += '<tr id="' + (i + 1) + '"><td><input type="checkbox" id="' + result[i].no + '" class="check_box"/></td><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>' + barcode_status + button_printf + '</tr>';
+				$(tb).appendTo("#TM_Table_NO_WEIGHT");
+			}
+			else {
+				tb += '<tr id="' + (i + 1) + '"><td  style="text-align: center;">' + result[i].no + '.' + '</td><td>' + result[i].stcode + '</td><td>' + result[i].stname + '</td><td  style="text-align: right;" >' + result[i].unit_weight + '</td>' + barcode_status + button_printf + '</tr>';
+				$(tb).appendTo("#TM_Table_Quantity");
+			}
 
-
-
-			$(tb).appendTo("#TM_Table_Quantity");
 
 		}
+
 
 	}).fail(function (error) {
 
@@ -178,3 +201,11 @@ function Show_Item(grcode, stcode, price, weight_stable,fixed_weight) {
 	});
 
 }
+
+$(document).on('click', '.checkall', function () {
+	if (this.checked) {
+		$(".check_box").prop("checked", true);
+	} else {
+		$(".check_box").prop("checked", false);
+	}
+});

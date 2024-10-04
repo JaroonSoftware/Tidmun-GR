@@ -31,6 +31,7 @@ date_default_timezone_set('Asia/Bangkok');
                 set
                 unit_weight = :unit_weight,
                 barcode_status = 'ออก barcode แล้ว',
+                barcode_id = :barcode_id,
                 barcode_date = CURRENT_TIMESTAMP()
                 where grcode = :grcode and stcode = :stcode and no = :no";
 
@@ -38,10 +39,11 @@ date_default_timezone_set('Asia/Bangkok');
                 if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
 
                 $stmt->bindValue(":unit_weight", number_format($_POST['unit_weight'], 2), PDO::PARAM_STR);
+                $stmt->bindValue(":barcode_id", $barcode_id, PDO::PARAM_STR);
                 $stmt->bindParam(":no", $_POST['no'], PDO::PARAM_STR);
-                $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);
+                $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);                
                 $stmt->bindValue(":grcode", $_POST['grcode'], PDO::PARAM_STR);
-
+                
                 if (!$stmt->execute()) {
                     $error = $conn->errorInfo();
                     throw new PDOException("Insert data error => $error");

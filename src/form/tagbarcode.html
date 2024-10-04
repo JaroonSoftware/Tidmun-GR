@@ -60,15 +60,15 @@
     <style type="text/css">
       @page {
         size: 50mm 50mm;
-        margin: 0 ; 
-        padding: 0 ;
+        margin: 0;
+        padding: 0;
         overflow: hidden;
-        size: landscape
+        size: landscape;
         /* change the margins as you want them to be. */
       }
       body {
         margin: 0px;
-        padding: 0 35px;
+        padding: 0 20px 0 10px;
       }
       .fonttext {
         font-family: "Sarabun", sans-serif;
@@ -87,27 +87,37 @@
       .bgimg {
         position: fixed;
       }
+      @media print {
+        div.pagebreak {
+          page-break-after: always;
+        }
+      }
     </style>
     <!-- <svg id="barcode"></svg>
       <br /> -->
-    <div style="text-align: center; border: 0px solid #000;width:100%">
+    <div style="text-align: center; border: 0px solid #000; width: 100%">
       <div class="row justify-content-md-center">
-        <div class="col">
-          <span id="barcode_no"></span><span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
+        <div class="col-8" >
+          <span id="barcode_no"></span
+          ><span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
         </div>
 
         <!-- <span class="fonttext">น้ำหนักสุทธิ</span> -->
-        <div class="col">
-          <span id="barcode_unit_weight" class="fonttext" style="float: right;margin-right:30px">
+        <div class="col-4" >
+          <span
+            id="barcode_unit_weight"
+            class="fonttext"
+          >
             KG
           </span>
         </div>
       </div>
-      <img src="../../assets/icons/logo_tidmun.jpg" width="140" />
+      <img src="../../assets/icons/logo_tidmun.jpg" width="140" style="margin-right: 25px;"/>
       <svg class="mycss mybarcode"></svg>
       <br />
       <!-- <span id="barcode_stcode">100100</span> -->
     </div>
+    <div class="pagebreak"></div>
 
     <script type="text/javascript">
       const { ipcRenderer } = require("electron");
@@ -117,8 +127,8 @@
         // alert(accessToken.barcode_id);
         $("#barcode_unit_weight").text(accessToken.unit_weight + " KG");
         $("#barcode_stname").text(accessToken.stname);
-        $("#barcode_no").text(accessToken.no+". ");
-        
+        $("#barcode_no").text(accessToken.no + ". ");
+
         JsBarcode(".mybarcode", accessToken.barcode_id, {
           displayValue: true,
           width: 2,
@@ -128,32 +138,6 @@
           textAlign: "center",
         });
 
-        // $.post(
-        //   "https://tidmunzbuffet.com/api_app/barcode/add_barcode.php",
-        //   {
-        //     stcode: accessToken.stcode,
-        //     grcode: accessToken.grcode,
-        //     unit_weight: accessToken.unit_weight,
-        //   },
-        //   function (response2) {
-        //     let response = JSON.parse(response2);
-        //     // console.log(response);
-        //     // alert(response.barcode_id)
-
-        //     const ipc = require("electron").ipcRenderer;
-        //     // ipc.send('message:Edit', data);
-        //     ipc.send('print')
-
-        //     JsBarcode(".mybarcode", response.barcode_id, {
-        //       displayValue: false,
-        //       width: 3,
-        //       flat: true,
-        //       // text: accessToken.stcode,
-        //       fontOptions: "bold",
-        //       textAlign: "left",
-        //     });
-        //   }
-        // );
       });
     </script>
   </body>
