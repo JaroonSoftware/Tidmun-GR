@@ -32,7 +32,11 @@ td {
   padding: 8px 16px;
   border: 1px solid #0f0e0e;
 }
-
+.check_box{
+  font-size: 10px;
+  margin-left: 2px;
+  text-align: center;
+}
 th {
   background: #fcbe4b;
 }

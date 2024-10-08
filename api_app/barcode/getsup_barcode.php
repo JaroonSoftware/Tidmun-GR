@@ -9,9 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT a.no, a.stcode,i.stname , a.grcode,a.unit_weight, a.barcode_status ,a.barcode_id
     FROM tidmunzb_db.grbarcode a 
     left outer join items i on (a.stcode=i.stcode)
-    -- left outer join grdetail d on (a.grcode=d.grcode) and (a.stcode)
-    -- left outer join grmaster g on (a.grcode=g.grcode)
-    -- left outer join supplier s on (g.supcode=s.supcode) 
     where a.grcode = '" . $_POST['grcode'] . "' and a.stcode = '" . $_POST['stcode'] . "' ";
     // echo $sql;
     $stmt = $conn->prepare($sql);

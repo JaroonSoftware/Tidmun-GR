@@ -75,6 +75,8 @@
               เลือกใบรับสินค้าใหม่</button>
             <button class="btn btn-secondary " onclick="Show_Modal_Examine();"> <i class='fas fa-check-circle'></i>
               ตรวจสอบสินค้า</button>
+              <button id="btnPrint" class="btn btn-secondary" style="display:none;float: right;"> <i class='fas fa-print'></i>
+                Print</button>
           </div>
         </div>
         <br>
@@ -82,7 +84,7 @@
           <table id="TM_Table_Main">
             <thead>
               <tr style="text-align: center;">
-                <th width="9%">ลำดับที่</th>
+                <th width="10%">ลำดับที่</th>
                 <th width="10%">รหัสสินค้า</th>
                 <th width="30%">ชื่อสินค้า</th>
                 <th>จำนวนที่สั่ง</th>
@@ -120,13 +122,13 @@
           <table id="TM_Table_NO_WEIGHT" style="display:none">
             <thead>
               <tr style="text-align: center;">
-                <th><input type="checkbox" name="checkall" class="checkall"/></th>
+                <th width="5%"><input type="checkbox" name="checkall" class="checkall"/></th>
                 <th width="10%">ชิ้นที่</th>
                 <th width="12%">รหัสสินค้า</th>
                 <th width="30%">ชื่อสินค้า</th>
                 <th width="10%">น้ำหนัก</th>
                 <th width="25%">สถานะ</th>
-                <th width="13%">เพิ่มเติม</th>
+                <!-- <th width="13%">เพิ่มเติม</th> -->
               </tr>
             </thead>
             <tbody style="background-color: #ffffff;padding: 0;">
