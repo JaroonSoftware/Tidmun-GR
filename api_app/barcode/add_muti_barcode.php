@@ -15,9 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // echo $master['stcode'];
 
+    // $resultprint=$detail;
+
+    // echo $detail;
+
     foreach ($detail as $ind => $val) {
         // echo($val['barcode_id']);     
         // $response += $val['order_no'];
+        // $resultprint[$ind]
         if ($val['barcode_id'] === 'null') {
 
             // $detail[$ind]['barcode_id'] = '1';
@@ -46,14 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 barcode_status = 'ออก barcode แล้ว',
                 barcode_id = :barcode_id,
                 barcode_date = CURRENT_TIMESTAMP()
-                where grcode = :grcode and stcode = :stcode and no = :no";
+                where grcode = :grcode and stcode = :stcode and order_no = :order_no";
 
             $stmt = $conn->prepare($sql);
             if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
 
             $stmt->bindValue(":unit_weight", number_format($master['fixed_weight'], 2), PDO::PARAM_STR);
             $stmt->bindValue(":barcode_id", $barcode_id, PDO::PARAM_STR);
-            $stmt->bindParam(":no", $val['order_no'], PDO::PARAM_STR);
+            $stmt->bindParam(":order_no", $val['order_no'], PDO::PARAM_STR);
             $stmt->bindParam(":stcode", $master['stcode'], PDO::PARAM_STR);
             $stmt->bindValue(":grcode", $master['grcode'], PDO::PARAM_STR);
 
@@ -100,11 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die;
         }
     }
-
+    // var_dump()
+    // echo $detail['barcode_id'];
     // $conn->commit();
     if ($stmt->execute()) {
         http_response_code(200);
-        $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $detail['barcode_id'], 'stcode' => $master['stcode'], 'stname' => $master['stname'], 'grcode' => $master['grcode'], 'unit_weight' => number_format($master['fixed_weight'], 2), 'no' => $master['no']];
+        $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'detail' => $detail, 'stcode' => $master['stcode'], 'stname' => $master['stname'],'price' => $master['price'], 'grcode' => $master['grcode'], 'unit_weight' => number_format($master['fixed_weight'], 2)];
     } else {
         $response = ['status' => 0, 'message' => 'Error! ติดต่อโปรแกรมเมอร์'];
     }

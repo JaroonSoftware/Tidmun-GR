@@ -33,14 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 barcode_status = 'ออก barcode แล้ว',
                 barcode_id = :barcode_id,
                 barcode_date = CURRENT_TIMESTAMP()
-                where grcode = :grcode and stcode = :stcode and no = :no";
+                where grcode = :grcode and stcode = :stcode and order_no = :order_no";
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) throw new PDOException("Insert data error => {$conn->errorInfo()}");
 
     $stmt->bindValue(":unit_weight", number_format($_POST['unit_weight'], 2), PDO::PARAM_STR);
     $stmt->bindValue(":barcode_id", $barcode_id, PDO::PARAM_STR);
-    $stmt->bindParam(":no", $_POST['no'], PDO::PARAM_STR);
+    $stmt->bindParam(":order_no", $_POST['order_no'], PDO::PARAM_STR);
     $stmt->bindParam(":stcode", $_POST['stcode'], PDO::PARAM_STR);
     $stmt->bindValue(":grcode", $_POST['grcode'], PDO::PARAM_STR);
 
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $conn->commit();
     if ($stmt->execute()) {
         http_response_code(200);
-        $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $barcode_id, 'stcode' => $_POST['stcode'], 'stname' => $_POST['stname'], 'grcode' => $_POST['grcode'], 'unit_weight' => number_format($_POST['unit_weight'], 2), 'no' => $_POST['no']];
+        $response = ['status' => 1, 'message' => 'เพิ่มข้อมูลสำเร็จ', 'barcode_id' => $barcode_id, 'stcode' => $_POST['stcode'],'stcode' => $_POST['stcode'], 'stname' => $_POST['stname'], 'grcode' => $_POST['grcode'], 'unit_weight' => number_format($_POST['unit_weight'], 2), 'stname' => $_POST['stname']];
     } else {
         $response = ['status' => 0, 'message' => 'Error! ติดต่อโปรแกรมเมอร์'];
     }

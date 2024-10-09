@@ -93,16 +93,15 @@
         }
       }
     </style>
-    <!-- <svg id="barcode"></svg>
-      <br /> -->
-    <div style="text-align: center; border: 0px solid #000; width: 100%">
+
+    <div id="root"></div>
+    <!-- <div style="text-align: center; border: 0px solid #000; width: 100%">
       <div class="row justify-content-md-center">
         <div class="col-8" >
           <span id="barcode_no"></span
           ><span id="barcode_stname" class="fonttext"> หมูสามชั้น </span>
         </div>
 
-        <!-- <span class="fonttext">น้ำหนักสุทธิ</span> -->
         <div class="col-4" >
           <span
             id="barcode_unit_weight"
@@ -115,29 +114,48 @@
       <img src="../../assets/icons/logo_tidmun.jpg" width="140" style="margin-right: 25px;"/>
       <svg class="mycss mybarcode"></svg>
       <br />
-      <!-- <span id="barcode_stcode">100100</span> -->
     </div>
-    <div class="pagebreak"></div>
+    <div class="pagebreak"></div> -->
 
     <script type="text/javascript">
       const { ipcRenderer } = require("electron");
 
       ipcRenderer.on("send-barcode", (event, accessToken) => {
-        // const stcode = accessToken;
-        // alert(accessToken.barcode_id);
-        $("#barcode_unit_weight").text(accessToken.unit_weight + " KG");
-        $("#barcode_stname").text(accessToken.stname);
-        $("#barcode_no").text(accessToken.no + ". ");
+        
 
-        JsBarcode(".mybarcode", accessToken.barcode_id, {
-          displayValue: true,
-          width: 2,
-          flat: true,
-          text: accessToken.stcode,
-          fontOptions: "bold",
-          textAlign: "center",
-        });
+        let imgsrc =
+          '<img src="../../assets/icons/logo_tidmun.jpg" width="140" style="margin-right: 25px;"/>';
 
+        for (let i = 0; i < accessToken.detail.length; i++) {
+          let tmphtml = "";
+          tmphtml +=
+            '<div style="text-align: center; border: 0px solid #000; width: 100%"><div class="row justify-content-md-center"><div class="col-8" ><span id="barcode_no">' +
+            accessToken.detail[i].order_no +
+            ". " +
+            '</span><span id="barcode_stname" class="fonttext"> ' +
+            accessToken.stname +
+            ' </span></div><div class="col-4" ><spanid="barcode_unit_weight"class="fonttext">' +
+            accessToken.unit_weight +
+            " KG" +
+            "</span></div></div>" +
+            imgsrc +
+            '<svg class="mycss" id="mybarcode'+i+'" jsbarcode-value="' +
+            accessToken.detail[i].barcode_id +
+            '"></svg><br /></div><div class="pagebreak"></div>';
+
+          $("#root").prepend(tmphtml);
+
+          JsBarcode("#mybarcode"+i,accessToken.detail[i].barcode_id, {
+            displayValue: true,
+            width: 2,
+            flat: true,
+            text: accessToken.stcode,
+            fontOptions: "bold",
+            textAlign: "center",
+          });
+        }
+        // console.log(accessToken)
+        // $("#barcode_no").text();
       });
     </script>
   </body>

@@ -58,7 +58,7 @@ function createWindow() {
       width: 350,
       height: 200,
       resizable: false,
-      show: true,
+      show: false,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -69,7 +69,7 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: false,
+      silent: true,
       // deviceName: "Microsoft Print to PDF",
       deviceName: 'HPRT HT300 - ZPL',
       margins: {
@@ -84,15 +84,20 @@ function createWindow() {
     // formbarcode.hide();
     formbarcode.webContents.on('did-finish-load', () => {
 
+
+
+      // Something you want delayed.
       formbarcode.webContents.send("send-barcode", dataRender);
 
 
-      formbarcode.webContents.print(options, (success, failureReason) => {
-        if (!success) console.log(failureReason);
 
-        // console.log('Print Initiated');
-      });
+      setTimeout(function () {
+        formbarcode.webContents.print(options, (success, failureReason) => {
+          if (!success) console.log(failureReason);
 
+          // console.log('Print Initiated');
+        });
+      }, 500);
 
     })
 
@@ -239,7 +244,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", function () {
-  if (process.platform !== "darwin") { app.quit();  }
+  if (process.platform !== "darwin") { app.quit(); }
 });
 
 app.on('will-quit', function () {

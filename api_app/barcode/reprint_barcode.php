@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $conn->commit();
     if ($stmt->execute()) {
         http_response_code(200);
-        $response = ['status' => 1, 'message' => 'เตรียมข้อมูลสำเร็จ', 'barcode_id' => $_POST['barcode_id'], 'stcode' => $stcode, 'stname' => $stname, 'grcode' => $grcode, 'unit_weight' => number_format($unit_weight, 2), 'no' => $_POST['no']];
+        $response = ['status' => 1, 'message' => 'เตรียมข้อมูลสำเร็จ', 'barcode_id' => $_POST['barcode_id'], 'stcode' => $stcode, 'stname' => $stname, 'grcode' => $grcode, 'unit_weight' => number_format($unit_weight, 2), 'order_no' => $_POST['order_no']];
     } else {
         $response = ['status' => 0, 'message' => 'Error! ติดต่อโปรแกรมเมอร์'];
     }
