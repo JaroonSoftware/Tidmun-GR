@@ -58,7 +58,7 @@ function createWindow() {
       width: 350,
       height: 200,
       resizable: false,
-      show: false,
+      show: true,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -69,7 +69,7 @@ function createWindow() {
 
     // var current = document.getElementById('current');
     var options = {
-      silent: true,
+      silent: false,
       // deviceName: "Microsoft Print to PDF",
       deviceName: 'HPRT HT300 - ZPL',
       margins: {
@@ -100,68 +100,6 @@ function createWindow() {
       }, 500);
 
     })
-
-    // const { PosPrinter } = require('@plick/electron-pos-printer');
-    // // console.log(dataRender)
-    // const options = {
-    //   preview: true,
-    //   margin: '0 0 0 0',
-    //   padding:'0 0 0 0',
-    //   copies: 1,
-    //   silent:true,
-    //   width:'95mm',
-    //   // printerName: 'HPRT HT300 - ZPL',
-    //   // timeOutPerLine: 400,
-    //   pageSize: '50mm', // page size
-    // };
-
-    // const data = [
-    //   {
-    //     type: 'table',
-    //     style: { border: '0px solid #000',padding: '0px',margin: '0px', fontSize: '24px' ,fontFamily: 'sans-serif',fontWeight: '700'}, // style the table
-    //     tableBody: [
-    //       [
-    //         { type: 'image', path: 'assets/icons/logo_tidmun.jpg',width: '60px', position: 'center' },
-    //         // { type: 'text', value: '<img src="assets/icons/logo_tidmun.jpg" width="100" />'},            
-    //         { type: 'text', value: dataRender.no+'. '+dataRender.stname+'<br>'+dataRender.unit_weight+' KG' ,position:'right'},
-    //       ],
-    //     ],
-    //     tableHeaderStyle: { backgroundColor: 'red', color: 'white' },
-    //     tableBodyStyle: { border: '0px solid #000' },
-    //     tableFooterStyle: { backgroundColor: '#000', color: 'white' },
-    //     tableHeaderCellStyle: {
-    //       // padding: '5px 2px',
-    //     },
-    //     tableBodyCellStyle: {
-    //       padding: '0px',
-    //       // padding: '1px 2px',
-    //     },
-    //     // custom style for the footer cells
-    //     tableFooterCellStyle: {
-    //       padding: '0px',
-    //     },
-    //   },
-    //   {
-    //     type: 'barCode',
-    //     value: dataRender.barcode_id,
-    //     height: 65, // height of barcode, applicable only to bar and QR codes
-    //     width: 3, // width of barcode, applicable only to bar and QR codes
-    //     position: 'center',
-    //     // displayValue: true, // Display value below barcode
-    //     fontSize: 30,
-    //   },
-    //   {
-    //     type: 'text',
-    //     value: dataRender.stcode,
-    //     style: { fontSize: '24px', textAlign: 'center',fontWeight: '700',padding: '0px',margin: '0px' },
-    //   },
-    // ]
-
-    // PosPrinter.print(data, options)
-    //   .then(console.log)
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   }
 
   const electronLocalshortcut = require("electron-localshortcut");
