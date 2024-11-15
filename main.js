@@ -121,32 +121,6 @@ function createWindow() {
     mainWindow.webContents.send("delete-token");
   });
 
-  const editwindow = new BrowserWindow({
-    autoHideMenuBar: true,
-    parent: mainWindow,
-    height: 700,
-    show: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
-    },
-  });
-
-
-  editwindow.loadFile("src/modal/modal_edit.html");
-  // editwindow.setIcon('assets/icons/win/icon.ico');
-  editwindow.on("close", (evt) => {
-    evt.preventDefault(); // This will cancel the close
-    editwindow.hide();
-  });
-
-  ipc.on("edit", (event, data) => {
-    accessToken = data;
-    editwindow.show();
-    editwindow.webContents.send("send-token", accessToken);
-  });
-
   ipc.on("message:loginShow", () => {
     Select_GR();
   });
